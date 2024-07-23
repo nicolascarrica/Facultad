@@ -1,0 +1,33 @@
+programa Ejercicio5
+procesos
+  proceso Escalona (E subida:numero; E descanso: numero)
+  comenzar
+    repetir subida
+      mover
+    derecha
+    repetir descanso
+      mover
+    repetir 3
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    longSubida:numero
+    longDescanso:numero
+  comenzar
+    longSubida:= 3
+    longDescanso:= 2
+    repetir 3
+      Escalona (longSubida, longDescanso) 
+      longSubida:=longSubida-1
+      longDescanso:=longDescanso+1
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

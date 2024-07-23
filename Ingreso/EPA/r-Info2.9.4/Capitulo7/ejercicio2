@@ -1,0 +1,47 @@
+programa ejercicio2
+procesos
+  proceso TrasladarFlores (ES floresMovidas:numero)
+  variables
+    cantidadFlores:numero
+  comenzar
+    cantidadFlores:=0
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cantidadFlores:=cantidadFlores+1
+      floresMovidas:=floresMovidas+1
+    Pos(PosAv, PosCa+1)
+    repetir cantidadFlores
+      depositarFlor
+    Pos(PosAv, PosCa-1)
+  fin
+  proceso RecorrerCalles (ES flores:numero)
+  comenzar
+    mientras(PosAv<100)
+      si HayFlorEnLaEsquina
+        TrasladarFlores(flores)
+      mover
+    si HayFlorEnLaEsquina
+      TrasladarFlores(flores)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    floresMovidas:numero
+  comenzar
+    derecha
+    floresMovidas:=0
+    mientras (PosAv<100)
+      RecorrerCalles(floresMovidas)
+      si PosCa<99
+        Pos(1, PosCa+2)
+    Informar(floresMovidas)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo,ciudad)
+  Iniciar(rinfo,1,1)
+fin
+    

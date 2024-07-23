@@ -1,0 +1,42 @@
+programa Cap2Ejemplo1
+procesos 
+  proceso trasladarFlores (ES floresTrasladadas:numero)
+  variables
+    floresEnEsq:numero
+  comenzar
+    floresEnEsq:=0
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      floresEnEsq:= floresEnEsq + 1
+      floresTrasladadas:= floresTrasladadas + 1
+    Pos(PosAv,(PosCa + 1))
+    repetir floresEnEsq
+      depositarFlor
+    Pos(PosAv,(PosCa -1))
+  fin
+  proceso recorrerCalle (E calle:numero; ES floresTrasladadas:numero)
+  comenzar
+    repetir 99
+      si HayFlorEnLaEsquina
+        trasladarFlores (floresTrasladadas)
+      mover
+      si HayFlorEnLaEsquina
+        trasladarFlores (floresTrasladadas
+
+  fin
+      
+
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  comenzar 
+    derecha
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 
+

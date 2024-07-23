@@ -1,0 +1,26 @@
+programa Cap2Ejemplo1
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  variables
+    cuadras_recorridas: numero
+  comenzar 
+    cuadras_recorridas:=0
+    mientras ~(HayFlorEnLaEsquina & HayPapelEnLaEsquina)
+      mover
+      cuadras_recorridas := cuadras_recorridas + 1
+    Informar (cuadras_recorridas)
+      
+      
+
+
+
+
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

@@ -1,0 +1,28 @@
+programa Ejercicio1
+procesos
+  proceso cuadrado (E lado:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        mover
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    longitudLado:numero
+  comenzar
+    Pos(2,1)
+    longitudLado:=1
+    repetir 4
+      cuadrado (longitudLado)
+      longitudLado:=longitudLado+1
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo,ciudad)
+  Iniciar(rinfo,1,1)
+fin

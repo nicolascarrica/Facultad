@@ -1,0 +1,75 @@
+programa examen310122
+procesos
+  proceso ContarPapeles (ES papeles:numero)
+  variables
+    aux:numero
+  comenzar
+    aux:=0
+    papeles:=0
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+      aux:=aux+1
+    repetir aux
+      depositarPapel
+  fin
+  proceso ContarFlores (ES flores:numero)
+  variables
+    aux:numero
+  comenzar
+    aux:=0
+    flores:=0
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+      aux:=aux+1
+    repetir aux
+      depositarFlor
+  fin
+  proceso ContarEsquinas (ES vacias:numero; ES noVacias:numero)
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    ContarPapeles(papeles)
+    ContarFlores(flores)
+    si((flores=0)&(papeles=0))
+      vacias:=vacias+1
+    si((flores=5)&(papeles=2))
+      noVacias:=noVacias+1
+  fin
+  proceso RecorrerPares (ES vacias:numero; ES noVacias:numero)
+  comenzar
+    noVacias:=0
+    mientras(PosAv<100)
+      ContarEsquinas(vacias, noVacias)
+      mover
+    ContarEsquinas(vacias, noVacias)
+    si (PosCa<99)
+      Pos(1, PosCa+2)
+    Informar(noVacias)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    vacias:numero
+    noVacias:numero
+  comenzar
+    vacias:=0
+    derecha
+    Pos(1,2)
+    repetir 49
+      RecorrerPares(vacias,noVacias)
+    RecorrerPares(vacias,noVacias)
+    Informar(vacias)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

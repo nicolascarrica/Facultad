@@ -1,0 +1,30 @@
+programa ejercicio8
+procesos
+  proceso Avenida (E avenida:numero; E pasos:numero)
+  comenzar
+    Pos(avenida,1)
+    si pasos>0
+      repetir pasos
+        mientras (PosCa<pasos)
+          mover
+      Informar(pasos)
+    si pasos>99
+      repetir 99
+        mover
+      Informar(pasos)
+    sino
+      Informar(0)
+  fin
+areas 
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  comenzar
+    Avenida(2,5)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

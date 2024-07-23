@@ -1,0 +1,29 @@
+programa ejercicio7
+procesos
+  proceso CalleFlor (E nCalle: numero; E nFlores:numero)
+  variables
+    cantidadFlores:numero
+  comenzar
+    derecha
+    Pos(1,nCalle)
+    cantidadFlores:=0
+    mientras (cantidadFlores<nFlores)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        cantidadFlores:=cantidadFlores+1
+      si(cantidadFlores<=nFlores)
+        mover
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  comenzar
+    CalleFlor(2,5)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

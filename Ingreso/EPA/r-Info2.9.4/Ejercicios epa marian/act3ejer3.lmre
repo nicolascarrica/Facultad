@@ -1,0 +1,35 @@
+programa Cap2Ejemplo1
+procesos
+  proceso recorrerAv (E av:numero ; ES pasosTotales:numero)
+  variables
+    pasos:numero
+  comenzar
+    pasos:=0
+    Pos(av,1)
+    mientras (~(HayFlorEnLaEsquina))
+      mover
+      pasos:= pasos + 1
+    Informar (pasos)
+    pasosTotales := pasos + pasosTotales
+  fin
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  variables
+    pasosTotales:numero
+    av:numero
+  comenzar 
+    av:=2
+    pasosTotales:=0
+    repetir 50
+      recorrerAv (av,pasosTotales)
+      av:= av + 2
+    Informar (pasosTotales)
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

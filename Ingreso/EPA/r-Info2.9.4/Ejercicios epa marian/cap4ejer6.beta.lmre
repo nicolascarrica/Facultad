@@ -1,0 +1,39 @@
+programa Cap2Ejemplo1
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  variables
+    papeles_flores:numero
+    coinciden: boolean
+    pasos:numero
+  comenzar 
+    coinciden:=F
+    pasos:=0
+    mientras (coinciden = F)
+      papeles_flores:=0
+      mientras ((HayPapelEnLaEsquina) & (HayFlorEnLaEsquina))
+        tomarPapel
+        tomarFlor
+        papeles_flores:= papeles_flores + 1 
+      repetir papeles_flores
+        depositarFlor
+        depositarPapel
+      si(papeles_flores = 3)
+        coinciden := V
+        Informar (PosAv)
+      si (pasos = 99) & (coinciden = F)
+        derecha
+        pasos := 0
+      si (coinciden = F)
+        mover
+        pasos:=pasos+1
+
+
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

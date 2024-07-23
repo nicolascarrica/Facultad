@@ -1,0 +1,30 @@
+programa Cap2Ejemplo1
+procesos
+  proceso hasta30
+  variables
+    flores:numero
+  comenzar
+    flores:=0
+    mientras (flores<30)
+      mientras HayFlorEnLaEsquina
+        tomarFlor
+        flores := flores + 1
+      si (flores < 30)
+        mover
+  fin
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  comenzar 
+    repetir 99
+      hasta30
+      Pos(PosAv + 1 ,1)
+    hasta30
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

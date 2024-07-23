@@ -1,0 +1,60 @@
+programa Ejercicio8
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso CallesImpares (ES flores:numero)
+  variables
+    flores:numero
+  comenzar
+    derecha
+    repetir 50
+      mientras ((flores<10)&(PosAv<100))
+        flores:=0
+        JuntarFlores(flores)
+        mover
+      si (PosCa<99)
+        Pos(1, PosCa+2)
+    Informar(flores)
+  fin
+  proceso Avenidas (E nAvenida:numero;ES papeles:numero)
+  comenzar
+    Pos(nAvenida,1)
+    mientras (PosCa<100)
+      JuntarPapeles(papeles)
+      mover
+    JuntarPapeles(papeles)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores, papeles, nAvenida:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    nAvenida:=10
+    CallesImpares(flores)
+    repetir 3
+      derecha
+    repetir 3
+      Avenidas(nAvenida, papeles)
+      nAvenida:=nAvenida+1
+    Informar(papeles)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

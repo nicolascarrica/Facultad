@@ -1,0 +1,66 @@
+programa examen2015
+procesos
+  proceso JuntarFlores(ES flores:numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:= flores+1
+  fin
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso RecorrerCalle8 (E papeles:numero)
+  variables
+    encontro:boolean
+    papelesEn8:numero
+  comenzar
+    encontro:=F
+    papelesEn8:=0
+    Pos(1,8)
+    mientras (encontro=F)
+      JuntarPapeles(papelesEn8)
+      si (papelesEn8=papeles)
+        encontro:=V
+      sino
+        mover
+  fin
+  proceso RecorrerAv6 (ES flores: numero; ES papeles:numero)
+  comenzar
+    Pos(6,1)
+    mientras (PosCa<100)
+      JuntarFlores(flores)
+      JuntarPapeles(papeles)
+      mover
+    JuntarFlores(flores)
+    JuntarPapeles(papeles)
+  fin
+  proceso RecorrerCalle4 (ES pasos:numero)
+  comenzar
+    Pos(1,4)
+    repetir pasos
+      mover
+  fin
+areas 
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    papeles:=0
+    flores:=0
+    RecorrerAv6(flores, papeles)
+    derecha
+    RecorrerCalle4(flores)
+    RecorrerCalle8(papeles)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo, 1,1)
+fin

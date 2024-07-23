@@ -1,0 +1,59 @@
+programa Cap2Ejemplo1
+procesos
+  proceso JuntarFlores
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso JuntarPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  proceso recorrerAv
+  comenzar
+    repetir 99
+      JuntarFlores
+      mover
+    JuntarFlores
+    Pos(PosAv,PosCa - 99)
+  fin
+  proceso recorrerCa
+  comenzar
+    derecha
+    repetir 99
+      JuntarPapeles
+      mover
+    JuntarPapeles
+    Pos(PosAv - 99,PosCa)
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+ 
+    
+
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  variables
+    recorridos:numero
+  comenzar 
+    repetir 100
+      recorridos:= recorridos + 1
+      Pos(recorridos,1)
+      recorrerAv
+      Pos(1,recorridos)
+      recorrerCa
+      izquierda
+  fin 
+
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

@@ -1,0 +1,18 @@
+programa Ejercicio1Cap2
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  comenzar
+    Pos(2,84)
+    si HayFlorEnLaEsquina
+      tomarFlor
+    Informar(PosAv, PosCa)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo, 1,1)
+fin
+   

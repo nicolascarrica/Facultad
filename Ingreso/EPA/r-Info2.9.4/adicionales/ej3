@@ -1,0 +1,49 @@
+programa ejercicio3
+procesos
+  proceso Limpieza (ES flores:numero; ES papeles:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso Rectangulo(E alto:numero; E ancho:numero; ES flores:numero; ES papeles:numero)
+  comenzar
+    repetir 2
+      repetir alto
+        mover
+      derecha
+      repetir ancho
+        Limpieza(flores,papeles)
+        mover
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots 
+  robot robot1
+  variables
+    flores:numero
+    papeles:numero
+    ancho:numero
+    alto:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    alto:=1
+    ancho:=15
+    repetir 8
+      Rectangulo(alto,ancho,flores, papeles)
+      Pos(1, PosCa+2)
+      ancho:=ancho-2
+    Informar(flores)
+    Informar(papeles)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

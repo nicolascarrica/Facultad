@@ -1,0 +1,65 @@
+programa Ejercicio5
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles (ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso RecorrerCalles (ES flores:numero; ES papeles:numero; E pasos:numero)
+  variables
+    f,p,esquinas:numero
+  comenzar
+    esquinas:=0
+    repetir pasos
+      f:=0
+      p:=0
+      JuntarFlores(f)
+      JuntarPapeles(p)
+      flores:=flores+f
+      papeles:=papeles+p
+      si((f=(p*2))&(f<>0)&(p<>0))
+        esquinas:=esquinas+1
+      si(PosAv<pasos)
+        mover
+    f:=0
+    p:=0
+    JuntarFlores(f)
+    JuntarPapeles(p)
+    flores:=flores+f
+    papeles:=papeles+p
+    si((f=(p*2))&(f<>0)&(p<>0))
+      esquinas:=esquinas+1
+    Informar(esquinas)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores:numero
+    papeles:numero
+    pasos:numero
+  comenzar
+    pasos:=9
+    flores:=0
+    papeles:=0
+    derecha
+    repetir 10
+      RecorrerCalles(flores, papeles, pasos)
+      Pos(1,(PosCa+1))
+      pasos:=pasos+2
+    Informar(flores, papeles)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

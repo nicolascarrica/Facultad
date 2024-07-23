@@ -1,0 +1,40 @@
+programa Ejercicio6
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    papeles:numero
+    flores:numero
+  comenzar
+    repetir 4
+      repetir 99
+        papeles:=0
+        flores:=0
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+          papeles:=papeles+1
+        mientras (HayFlorEnLaEsquina)
+          tomarFlor
+          flores:=flores+1
+        si((papeles=3) & (flores=3))
+          Informar(PosAv, PosCa)
+        mover
+      papeles:=0
+      flores:=0
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+        papeles:=papeles+1
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        flores:=flores+1
+      si((papeles=3) & (flores=3))
+        Informar(PosAv, PosCa)
+      derecha
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

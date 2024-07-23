@@ -1,0 +1,36 @@
+programa Ejercicio7
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    papeles: numero
+    esquinas: numero
+  comenzar
+    Pos(1,34)
+    derecha
+    esquinas:=0
+    repetir 100
+      papeles:=0
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+        papeles:=papeles+1
+      si(papeles=6)
+        esquinas:=esquinas+1
+      si (PosAv < 100)
+        mover
+    Informar(esquinas)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea (rinfo, ciudad)
+  Iniciar (rinfo,1,1)
+fin
+      
+
+        
+      
+       
+    
+    

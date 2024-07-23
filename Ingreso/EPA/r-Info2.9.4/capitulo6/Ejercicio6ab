@@ -1,0 +1,28 @@
+programa ejercicio6a
+procesos
+  proceso RecorrerAv (E nAvenida:numero)
+  comenzar
+    Pos(nAvenida,1)
+    mientras PosCa<100
+      mover
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    nAvenida:numero
+  comenzar
+    nAvenida:=1
+    mientras (PosAv<100)
+      RecorrerAv(nAvenida)
+      nAvenida:=nAvenida+1
+      Pos(nAvenida, PosCa-99)
+    RecorrerAv(nAvenida)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

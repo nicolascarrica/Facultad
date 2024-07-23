@@ -1,0 +1,34 @@
+programa Ejercicio3
+procesos
+  proceso rectangulo (E altura:numero; E base: numero)
+  comenzar
+    repetir 2
+      repetir altura
+        mover
+      derecha
+      repetir base
+        mover
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    longitudBase:numero
+    longitudAltura: numero
+  comenzar
+    longitudAltura:=1
+    longitudBase:=5
+    repetir 3
+      rectangulo (longitudAltura, longitudBase)
+      Pos(PosAv+1, PosCa+2)
+      longitudBase:=longitudBase-2
+    
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

@@ -1,0 +1,28 @@
+programa Cap3Ej1
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    florEn44: numero
+  comenzar
+    Pos(1,44)
+    derecha
+    florEn44:=0
+    repetir 99
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        florEn44:=florEn44+1
+      mover
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      florEn44:=florEn44+1
+    Informar(florEn44)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin
+    

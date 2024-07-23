@@ -1,0 +1,69 @@
+programa examen2017
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso Cuadrado (E lado:numero; ES papeles:numero)
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    repetir 4
+      repetir lado
+        JuntarPapeles(papeles)
+        JuntarFlores(flores)
+        mover
+      derecha
+    Informar(papeles, flores)
+  fin
+  proceso RecorrerCalle70  (E papeles:numero)
+  variables
+    encontro:boolean
+    papeles70:numero
+  comenzar
+    Pos(1,70)
+    papeles70:=0
+    encontro:=F
+    mientras (encontro=F)
+      JuntarPapeles(papeles70)
+      si (papeles70=papeles)
+        encontro:=V
+      sino
+        mover
+        papeles70:=0
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    totalPapeles:numero
+    papelesXCuadrado:numero
+  comenzar
+    papelesXCuadrado:=0
+    totalPapeles:=0
+    Cuadrado(18,papelesXCuadrado)
+    totalPapeles:=papelesXCuadrado+totalPapeles
+    Pos(30,30)
+    Cuadrado(20,papelesXCuadrado)
+    totalPapeles:=papelesXCuadrado+totalPapeles
+    derecha
+    RecorrerCalle70(totalPapeles)
+  fin
+variables
+  rinfo:robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

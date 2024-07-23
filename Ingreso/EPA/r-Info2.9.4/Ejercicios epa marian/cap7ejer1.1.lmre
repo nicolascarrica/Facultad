@@ -1,0 +1,43 @@
+programa Cap2Ejemplo1
+procesos
+  proceso recorrerCalle (E calle:numero; ES totPap:numero ; ES totFlor:numero)
+  comenzar
+    Pos(1,calle)
+    repetir 100
+      mientras HayFlorEnLaEsquina
+        tomarFlor
+        totFlor:= totFlor + 1
+      mientras HayPapelEnLaEsquina
+        tomarPapel
+        totPap:= totPap + 1
+      si (PosAv<100)
+        mover
+  fin  
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  variables
+    totalFlores:numero
+    totalPapeles:numero
+    calle:numero
+  comenzar 
+    derecha
+    totalFlores:=0
+    totalPapeles:=0
+    calle:=1
+    repetir 100
+      recorrerCalle (calle,totalFlores,totalPapeles)
+      si (calle < 100)
+        calle:= calle + 1
+    Informar(totalFlores,totalPapeles)
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 
+
+
+

@@ -1,0 +1,46 @@
+programa ejercicio3
+procesos
+  proceso masFlores (ES floresDepositadas:numero; ES papeles:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+    mientras ((floresDepositadas<=papeles) 6 HayFlorEnLaBolsa
+      depositarFlor
+      floresDepositadas:= floresDeopsitadas +1
+    repetir papeles
+      depositarPapel
+  fin
+  proceso EsquinasCompletadas (ES esquinas:numero)
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    
+  
+  fin
+    
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    floresMovidas:numero
+  comenzar
+    derecha
+    floresMovidas:=0
+    mientras (PosAv<100)
+      RecorrerCalles(floresMovidas)
+      si PosCa<99
+        Pos(1, PosCa+2)
+    Informar(floresMovidas)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo,ciudad)
+  Iniciar(rinfo,1,1)
+fin
+    

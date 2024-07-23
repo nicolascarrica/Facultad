@@ -1,0 +1,40 @@
+programa ejercicio3
+procesos
+  proceso ContarFlores (ES flores:numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso RecorrerAvenida
+  variables
+    cantidad:numero
+  comenzar
+    cantidad:=0
+    mientras (HayPapelEnLaEsquina|HayFlorEnLaEsquina)
+      ContarFlores(cantidad)
+      mover
+    ContarFlores(cantidad)
+    si (cantidad>=45)
+      Informar(cantidad)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    totalFlores:numero
+  comenzar
+    totalFlores:=0
+    mientras PosAv<100
+      RecorrerAvenida
+      si(PosAv<100)
+        Pos(PosAv+1,1)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo,ciudad)
+  Iniciar(rinfo,1,1)
+fin
+    

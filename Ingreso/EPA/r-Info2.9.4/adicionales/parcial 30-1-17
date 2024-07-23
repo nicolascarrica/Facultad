@@ -1,0 +1,72 @@
+programa parcia300127
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso RecorrerCalle70 (ES papeles:numero)
+  variables
+    coincide:boolean
+    papeles70:numero
+  comenzar
+    Pos(1,70)
+    derecha
+    coincide:=F
+    papeles70:=0
+    mientras (~coincide)
+      JuntarPapeles(papeles70)
+      si(papeles=papeles70)
+        coincide:=V
+      sino
+        mover
+        papeles70:=0
+  fin
+ 
+  proceso Cuadrado (E lado:numero; ES papeles:numero)
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    repetir 4
+      repetir lado
+        JuntarFlores(flores)
+        JuntarPapeles(papeles)
+        mover
+      derecha
+    Informar (flores, papeles)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    papelesCuadrado:numero
+    totalPapeles:numero
+  comenzar
+    papelesCuadrado:=0
+    totalPapeles:=0
+    Cuadrado(18, papelesCuadrado)
+    totalPapeles:=totalPapeles+papelesCuadrado
+    Pos(30,30)
+    Cuadrado(20, papelesCuadrado)
+    totalPapeles:=totalPapeles+papelesCuadrado
+    Informar(totalPapeles)
+    RecorrerCalle70(totalPapeles)
+    
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

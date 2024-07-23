@@ -1,0 +1,51 @@
+programa Ejercicio1
+procesos
+  proceso SumarPapelEnLaEsquina (ES papeles:numero)
+  variables
+    aux:numero
+  comenzar
+    aux:=0
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      aux:=aux+1
+      papeles:=papeles+1
+    repetir aux
+      depositarPapel
+  fin
+  proceso CalleConPapeles (ES total:numero)
+  variables
+    cuantos:numero
+  comenzar
+    mientras (PosAv<100)
+      cuantos:=0
+      SumarPapelEnLaEsquina(cuantos)
+      total:=total+cuantos
+      mover
+    SumarPapelEnLaEsquina(cuantos)
+    total:=total+cuantos
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    totalPapeles:numero
+  comenzar
+    totalPapeles:=0
+    derecha
+    Pos(1,99)
+    mientras (PosAv<100)
+      CalleConPapeles (totalPapeles)
+      si (PosCa<100)
+        Pos(1, PosCa+1)
+    CalleConPapeles(totalPapeles)
+    Informar(totalPapeles)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo,ciudad)
+  Iniciar(rinfo,1,1)
+fin
+      
+    

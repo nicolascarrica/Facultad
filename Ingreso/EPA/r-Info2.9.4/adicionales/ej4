@@ -1,0 +1,50 @@
+programa ejercicio4
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso RecorrerCa (E nCalle:numero; E pasos:numero)
+  comenzar 
+    Pos(1,nCalle)
+    derecha
+    repetir pasos
+      mover
+  fin
+  proceso RecorrerAv (ES flores:numero; ES papeles:numero)
+  comenzar
+    mientras ((PosCa<100)&((flores<25)|(flores>25)))
+      JuntarPapeles(papeles)
+      JuntarFlores(flores)
+      mover
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots 
+  robot robot1
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    mientras((flores<25)|(flores>25))
+      RecorrerAv(flores,papeles)
+      si PosAv<100
+        Pos(PosAv+1,1)
+    RecorrerCa(75, papeles)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

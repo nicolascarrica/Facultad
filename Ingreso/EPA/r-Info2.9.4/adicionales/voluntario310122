@@ -1,0 +1,72 @@
+programa voluntario310122
+procesos
+  proceso ContarFlores (ES flores:numero)
+  variables
+    aux:numero
+  comenzar
+    aux:=0
+    flores:=0
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+      aux:=aux+1
+    repetir aux
+      depositarFlor
+  fin
+  proceso ContarPapeles(ES papeles:numero)
+  variables
+    aux:numero
+  comenzar
+    aux:=0
+    papeles:=0
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+      aux:=aux+1
+    repetir aux
+      depositarPapel
+  fin
+  proceso VerificarEsquina (ES con2py5f:numero; ES vacias:numero)
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    ContarFlores(flores)
+    ContarPapeles(papeles)
+    si ((flores=5)&(papeles=2))
+      con2py5f:=con2py5f+1
+    si ((~HayPapelEnLaEsquina)&(~HayFlorEnLaEsquina))
+      vacias:=vacias+1
+  fin
+  proceso RecorrerCallePar (ES con2py5f:numero; ES vacias:numero)
+  comenzar
+    con2py5f:=0
+    repetir 99
+      VerificarEsquina(con2py5f, vacias)
+      mover
+    VerificarEsquina(con2py5f,vacias)
+    Informar(con2py5f)
+    si(PosCa<99)
+      Pos(1,PosCa+2)
+  fin 
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    con2py5f:numero
+    vacias:numero
+  comenzar
+    Pos(1,2)
+    derecha
+    repetir 99
+      RecorrerCallePar(con2py5f, vacias)
+    RecorrerCallePar(con2py5f, vacias)
+    Informar(vacias)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

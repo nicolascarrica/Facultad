@@ -1,0 +1,76 @@
+programa ej006
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles(ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso Cuadrado (E lado:numero; ES flores: numero; ES papeles:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        JuntarFlores(flores)
+        JuntarPapeles(papeles)
+        mover
+      derecha
+  fin
+  proceso RecorrerAv6 (E pasos: numero)
+  comenzar
+    Pos(6,1)
+    si(PosCa<100)
+      repetir pasos
+        mover
+  fin
+  proceso RecorrerCa4 (ES papeles:numero)
+  variables
+    papeles4:numero
+    encontro:boolean
+  comenzar
+    Pos(1,4)
+    papeles4:=0
+    encontro:=F
+    mientras (encontro=F)
+      JuntarPapeles(papeles4)
+      si((papeles4=5)|(~HayFlorEnLaEsquina))
+        encontro:=V
+      sino
+        si (HayPapelEnLaBolsa)
+          depositarPapel
+          papeles:=papeles-1
+          mover
+          papeles4:=0
+    Informar(papeles)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    Pos(10,10)
+    papeles:=0
+    flores:=0
+    Cuadrado(6, flores, papeles)    
+    Pos(13,13)
+    Cuadrado(2, flores, papeles)
+    RecorrerAv6(flores)
+    derecha
+    RecorrerCa4(papeles)
+    Informar(papeles)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin
+    

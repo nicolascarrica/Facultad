@@ -1,0 +1,91 @@
+programa Escamen2013
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso ContarPapelxEsquina(ES papeles:numero)
+  variables
+    aux:numero
+  comenzar
+    aux:=0
+    papeles:=0
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+      aux:=aux+1
+    repetir aux
+      depositarPapel
+  fin
+  proceso DepositarPapel(ES depositados:numero)
+  comenzar
+    si HayPapelEnLaBolsa
+      depositarPapel
+      depositados:=depositados+1
+  fin 
+  proceso Cuadrado(E lado:numero; ES flores:numero; ES papeles:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        JuntarFlores(flores)
+        JuntarPapeles(papeles)
+        mover
+      JuntarFlores(flores)
+      JuntarPapeles(papeles)
+      derecha
+  fin
+  proceso RecorrerAv6 (E pasos:numero)
+  comenzar
+    Pos(6,1)
+    repetir pasos
+      mover
+  fin
+  proceso RecorrerCa4 (ES depositados:numero)
+  variables
+    papeles:numero
+  comenzar
+    Pos(1,4)
+    ContarPapelxEsquina(papeles)
+    mientras((HayFlorEnLaEsquina)&~(papeles=5))
+      DepositarPapel(depositados)
+      mover
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores:numero
+    papeles:numero
+    lado:numero
+    depositados:numero
+  comenzar
+    depositados:=0
+    flores:=0
+    papeles:=0
+    Pos(10,5)
+    Cuadrado(6, flores, papeles)
+    Pos(11,6)
+    Cuadrado(4, flores, papeles)
+    Informar(papeles)
+    RecorrerAv6(flores)
+    derecha
+    RecorrerCa4(depositados)
+    Informar(depositados)
+    Informar((papeles-depositados))
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin
+  

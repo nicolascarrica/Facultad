@@ -1,0 +1,22 @@
+programa Cap2Ejemplo1
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  comenzar 
+    Pos(4,2)
+    mientras (PosCa <=4)
+      mover
+    derecha
+    mientras (PosAv <=6)
+      mover
+
+      
+
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

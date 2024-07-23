@@ -1,0 +1,54 @@
+programa Ejercicio7
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso RecorrerAv8 (ES flores:numero; ES papeles:numero)
+  variables
+    flores, papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    Pos(8,1)
+    mientras (HayFlorEnLaEsquina|HayPapelEnLaEsquina)
+      JuntarFlores(flores)
+      JuntarPapeles(papeles)
+      mover
+    Informar(papeles,flores)
+  fin
+  proceso Rectangulo (E alto:numero; E ancho:numero)
+  comenzar
+    repetir 2
+      repetir alto
+        mover
+      derecha
+      repetir ancho
+        mover
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores, papeles:numero
+  comenzar
+    RecorrerAv8(flores,papeles)
+    Pos(1,1)
+    Rectangulo(flores, papeles)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

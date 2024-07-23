@@ -1,0 +1,29 @@
+programa Cap2Ejemplo1
+procesos
+  proceso CalleFlor (E calle:numero ; E flores:numero)
+  variables
+    nroFlores:numero
+  comenzar
+    derecha
+    Pos(1,calle)
+    nroFlores:=0
+    mientras (nroFlores<flores)
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        nroFlores:= nroFlores + 1
+      si (nroFlores<flores)
+        mover
+  fin
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  comenzar 
+    CalleFlor(3,10)
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

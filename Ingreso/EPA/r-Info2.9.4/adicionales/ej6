@@ -1,0 +1,47 @@
+programa Ejercicio6
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  proceso Cuadrado (ES lado:numero; ES flores:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        JuntarPapeles
+        JuntarFlores(flores)
+        mover
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    lado:numero
+    flores:numero
+    floresAc:numero
+  comenzar
+    lado:=1
+    floresAc:=0
+    repetir 7
+      flores:=0
+      Cuadrado(lado, flores)
+      si(flores>20)
+        floresAc:=floresAc+1
+      lado:=lado+1
+    Informar(floresAc)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

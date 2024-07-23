@@ -1,0 +1,22 @@
+programa Ejercicio2Cap2
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  comenzar
+    Pos(65,50)
+    repetir 3
+      derecha
+    repetir 42
+      si HayPapelEnLaBolsa
+        depositarPapel
+      mover
+    Informar(PosAv, PosCa)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo, 1,1)
+fin
+   

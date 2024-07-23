@@ -1,0 +1,46 @@
+programa Cap2Ejemplo1
+procesos
+  proceso masFlores(ES papeles:numero ; ES floresDepositadas:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles := papeles + 1
+    mientras ((floresDepositadas <= papeles) & (HayFlorEnLaBolsa))
+      depositarFlor
+      floresDepositadas := floresDepositadas + 1
+    repetir papeles
+      depositarPapel
+  fin
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  variables
+    floresDepositadas:numero
+    papeles:numero
+    esquinasCompletadas:numero
+  comenzar 
+    Pos(9,1)
+    floresDepositadas:= 0
+    papeles:=0
+    mientras (HayFlorEnLaBolsa & (PosCa < 100))
+      masFlores(papeles,floresDepositadas)
+      si (papeles < floresDepositadas)
+        mover
+        esquinasCompletadas := esquinasCompletadas + 1
+        papeles:= 0
+        floresDepositadas := 0
+    si (PosCa = 100)
+      masFlores (papeles , floresDepositadas)
+      si (papeles < floresDepositadas)
+        esquinasCompletadas := esquinasCompletadas + 1
+    si (esquinasCompletadas < 100)
+      Pos(9,1)
+    Informar (esquinasCompletadas)      
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

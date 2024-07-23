@@ -1,0 +1,33 @@
+programa Cap2Ejemplo1
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  variables
+    flores: numero
+  comenzar 
+    flores:=0
+    derecha
+    Pos(1,44)
+    repetir 99
+      mientras (HayFlorEnLaEsquina)
+        tomarFlor
+        flores := flores +1
+      mover
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores := flores +1
+    Informar(flores)
+
+          
+      
+
+
+
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

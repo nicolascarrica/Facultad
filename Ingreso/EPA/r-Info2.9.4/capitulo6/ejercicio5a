@@ -1,0 +1,29 @@
+programa Ejercicio5
+procesos
+  proceso Escalona (E lado:numero)
+  comenzar
+    repetir 2
+      repetir lado
+        mover
+      derecha
+    repetir 2
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    longLado:numero
+  comenzar
+    longLado:= 4
+    repetir 3
+      Escalona (longLado)
+      longLado:=longLado -1 
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

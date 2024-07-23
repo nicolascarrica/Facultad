@@ -1,0 +1,64 @@
+programa ingreso2011
+procesos
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso Perimetro (ES flores:numero; ES papeles:numero)
+  comenzar
+    repetir 4
+      repetir 99
+        JuntarFlores(flores)
+        JuntarPapeles(papeles)
+        mover
+      JuntarFlores(flores)
+      JuntarPapeles(papeles)
+      derecha
+  fin
+  proceso RecorrerImpares (E pasos:numero)
+  comenzar
+    repetir pasos
+      mover
+    si (PosAv<98)
+      Pos(PosAv+2,1)
+  fin
+  proceso RecorrerPares (E pasos:numero)
+  comenzar
+    repetir pasos
+      mover
+    si (PosAv>99)
+      Pos(PosAv+2, 1)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    Perimetro(flores, papeles)
+    repetir 49
+      RecorrerImpares(flores)
+    RecorrerImpares(flores)
+    Pos(2,1)
+    repetir 49
+      RecorrerPares(papeles)
+    RecorrerPares
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

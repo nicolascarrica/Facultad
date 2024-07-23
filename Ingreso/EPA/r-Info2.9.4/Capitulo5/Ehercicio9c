@@ -1,0 +1,34 @@
+programa Ejercicio9
+procesos
+  proceso EncontrarPapel
+  variables
+    pasos:numero
+  comenzar
+    derecha
+    pasos:=0
+    mientras ((~HayPapelEnLaEsquina) & (PosAv<100))
+      mover
+      pasos:=pasos+1
+    si(HayPapelEnLaEsquina)
+      Informar(pasos)
+    sino
+      Informar(999)
+    repetir 3
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  comenzar
+    repetir 99
+      EncontrarPapel
+      Pos(1, PosCa+1)
+    EncontrarPapel
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

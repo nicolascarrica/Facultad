@@ -1,0 +1,54 @@
+programa Ej4cap6
+procesos
+  proceso juntarPapel
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso dejarPapel
+  comenzar
+    mientras (HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+  proceso rectangulo
+  comenzar
+    repetir 2
+      repetir 3
+        juntarPapel
+        mover
+      dejarPapel
+      derecha
+      repetir 5
+        juntarPapel
+        mover
+      dejarPapel
+      derecha
+  fin
+  proceso girarRectangulo
+  comenzar
+    repetir 3
+      derecha
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  comenzar
+    repetir 2
+      rectangulo
+      Pos(PosAv+9, PosCa)
+      girarRectangulo
+      rectangulo
+      Pos(PosAv+1,1)
+      derecha
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin
+
+
+      
+  

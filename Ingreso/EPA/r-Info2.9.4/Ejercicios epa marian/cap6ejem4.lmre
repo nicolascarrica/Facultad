@@ -1,0 +1,36 @@
+programa Cap2Ejemplo1
+procesos
+  proceso rectangulo (E vertical:numero; E horizontal:numero)
+  comenzar
+    repetir 2
+      repetir vertical
+        mover
+      derecha
+      repetir horizontal
+        mover
+      derecha
+  fin
+    
+    
+areas 
+  ciudad: AreaC (1,1,100,100) 
+robots 
+  robot robot1 
+  variables
+    base:numero
+    altura:numero
+  comenzar 
+    base:=19
+    altura:=5
+    repetir 5
+      rectangulo(altura,base)
+      Pos(PosAv+2,PosCa+altura)
+      base:= base - 4
+      altura:= altura - 1
+  fin 
+variables 
+  R-info: robot1 
+comenzar 
+  AsignarArea (R-info,ciudad) 
+  Iniciar (R-info,1,1) 
+fin 

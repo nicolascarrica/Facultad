@@ -1,0 +1,74 @@
+programa ejercicio3
+procesos
+  proceso SumarFlores (ES flores:numero)
+  variables
+    acumulador:numero
+  comenzar
+    acumulador:=0
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      acumulador:=acumulador+1
+      flores:=flores+1
+    repetir acumulador
+      depositarFlor
+  fin
+  proceso SumarPapeles (ES papeles:numero)
+  variables
+    acumulador:numero
+  comenzar
+    acumulador:=0
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      acumulador:=acumulador+1
+      papeles:=papeles+1
+    repetir acumulador
+      depositarPapel
+  fin
+  proceso RecorrerAvenidas (ES esquinaFlor:numero; ES esquinaPapel:numero)
+  variables
+    papeles:numero
+    flores:numero
+  comenzar
+    mientras PosCa<100
+      papeles:=0
+      flores:=0
+      SumarFlores(flores)
+      SumarPapeles(papeles)
+      si(flores=20)
+        esquinaFlor:=esquinaFlor+1
+      si(papeles=60)
+        esquinaPapel:=esquinaPapel+1 
+      mover
+    SumarFlores(flores)
+    SumarPapeles(papeles)
+    si(flores=20)
+      esquinaFlor:=esquinaFlor+1
+    si(papeles=60)
+      esquinaPapel:=esquinaPapel +1
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    esquinaFlor:numero
+    esquinaPapel:numero
+  comenzar
+    Pos(98,1)
+    esquinaFlor:=0
+    esquinaPapel:=0
+    mientras PosAv<100
+      RecorrerAvenidas(esquinaFlor, esquinaPapel)
+      si(PosAv<100)
+        Pos(PosAv+1,1)
+    RecorrerAvenidas(esquinaFlor, esquinaPapel)
+    Informar(esquinaPapel)
+    Informar(esquinaFlor)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo,ciudad)
+  Iniciar(rinfo,1,1)
+fin
+    

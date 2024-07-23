@@ -1,0 +1,66 @@
+programa simulacro001
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso RecorrerAv6 (ES flores:numero; ES papeles:numero)
+  comenzar
+    Pos(6,1)
+    mientras (PosCa<100)
+      JuntarFlores(flores)
+      JuntarPapeles(papeles)
+      mover
+    JuntarFlores(flores)
+    JuntarPapeles(papeles)
+    Informar(flores, papeles)
+  fin
+  proceso RecorrerCa4 (E pasos:numero)
+  comenzar
+    Pos(1,4)
+    repetir pasos
+      mover
+  fin
+  proceso RecorrerCa8 (E papeles:numero)
+  variables
+    encontroEsquina:boolean
+    papeles8:numero
+  comenzar
+    Pos(1,8)
+    encontroEsquina:=F
+    papeles8:=0
+    mientras (encontroEsquina=F)
+      JuntarPapeles(papeles8)
+      si (papeles8=papeles)
+        encontroEsquina:=V
+      sino
+        mover
+        papeles8:=0
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    RecorrerAv6(flores, papeles)
+    derecha
+    RecorrerCa4(flores)
+    RecorrerCa8(papeles)
+  fin
+variables
+  rinfo:robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin

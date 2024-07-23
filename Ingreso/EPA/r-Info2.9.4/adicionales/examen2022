@@ -1,0 +1,60 @@
+programa examen2022
+procesos
+  proceso ContarFlores(ES flores:numero)
+  variables
+    aux:numero
+  comenzar
+    aux:=0
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:= flores+1
+      aux:=aux+1
+    repetir aux
+      depositarFlor
+  fin
+  proceso VerificarEsquina (ES esquinasCon3:numero)
+  variables
+    flores:numero
+  comenzar
+    flores:=0
+    ContarFlores(flores)
+    si (flores=3)
+      esquinasCon3:=esquinasCon3+1
+  fin
+  proceso RecorrerCa5 (ES esquinasCon3:numero)
+  comenzar
+    Pos(1,5)
+    mientras (PosAv<100)
+      VerificarEsquina(esquinasCon3)
+      mover
+    VerificarEsquina(esquinasCon3)
+  fin
+  proceso RecorrerAvPar
+  comenzar
+    mientras((HayFlorEnLaEsquina)|(HayPapelEnLaEsquina))
+      si (PosCa<100)
+        mover
+    si PosAv<99
+      Pos(PosAv+2,1)
+  fin
+areas 
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot robot1
+  variables
+    esquinasCon3:numero
+  comenzar
+    Pos(2,1)
+    repetir 49
+      RecorrerAvPar
+    RecorrerAvPar
+    derecha
+    RecorrerCa5(esquinasCon3)
+    Informar(esquinasCon3)
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo, 1,1)
+fin

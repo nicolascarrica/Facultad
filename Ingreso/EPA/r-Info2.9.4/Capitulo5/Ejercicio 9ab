@@ -1,0 +1,27 @@
+programa ejercicio9a
+procesos
+  proceso Hasta30
+  variables 
+    flores:numero
+  comenzar
+    flores:=0
+    mientras((flores<30) & (PosCa<100))
+      mientras HayFlorEnLaEsquina
+        tomarFlor
+        flores:=flores+1
+      mover
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots 
+  robot robot1
+  comenzar
+    Hasta30
+  fin
+variables
+  rinfo: robot1
+comenzar
+  AsignarArea(rinfo, ciudad)
+  Iniciar(rinfo,1,1)
+fin
+  
