@@ -12,8 +12,8 @@ En este repositorio, encontrarás una colección de recursos que me han ayudado 
 
 ## Carpetas de Materias 📁
 
-- [**Conceptos de Algoritmos, Datos y Programas (CADP)**](./carpeta-cadp): Contiene ejercicios prácticos, presentaciones teóricas y otros recursos relacionados con la materia CADP.
-- [**Organización de Computadoras**](./carpeta-organizacion-computadoras): Incluye presentaciones teóricas, prácticas resueltas y ejemplos de parciales de años anteriores.
+- [**Conceptos de Algoritmos, Datos y Programas (CADP)**](./Semestre-1/CADP/)
+- [**Organización de Computadoras**](./Semestre-1/Organizacion%20de%20Computadoras/)
 
 ## Notas Adicionales 📝
 
