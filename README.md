@@ -11,6 +11,10 @@ En este repositorio, encontrarás una colección de recursos que me han ayudado 
 - **Ejemplos de Exámenes** 📄: Ejemplos de parciales y exámenes de años anteriores para ayudarte a prepararte mejor para tus evaluaciones.
 
 ## Carpetas de Materias 📁
+### Ingreso 🎓
+- [**Carpeta de Ingreso**](./Ingreso)
+
+### Primer Semestre 📅
 
 - [**Conceptos de Algoritmos, Datos y Programas (CADP)**](./Semestre-1/CADP/)
 - [**Organización de Computadoras**](./Semestre-1/Organizacion%20de%20Computadoras/)
