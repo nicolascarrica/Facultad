@@ -128,3 +128,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+/Semestre-2/Taller_de_Programacion/Objetos/Proyecto_CN/nbproject/private/
+/Semestre-2/Taller_de_Programacion/Objetos/Proyecto_CN/build/
