@@ -39,7 +39,6 @@ public class Ej05 {
             }
             promedio=total/clientes;
             System.out.println("La categoria " + i + "tiene una calificacion promedio de " + promedio);
-            
         }
     }    
 }
