@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tema4;
+package tema4.Ejercicio1;
 
 public class Rectangulo extends Figura{
     private double base;
