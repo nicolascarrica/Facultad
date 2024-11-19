@@ -1,1 +1,1 @@
-C:\Users\nicol\OneDrive\Escritorio\Nicolas\Facultad\Semestre-2\Arquitectura_de_Computadoras\Practica\WinMips\4-6_PantallaAlfanumerica.s
+C:\Users\nicol\OneDrive\Escritorio\Nicolas\Facultad\Semestre-2\Arquitectura_de_Computadoras\Practica\06\aa.s

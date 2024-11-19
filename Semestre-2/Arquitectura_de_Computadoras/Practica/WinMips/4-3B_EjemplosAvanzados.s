@@ -103,19 +103,73 @@
 ;-------------------------------------------------------------------------------------------------------------------------------------
 ;Dado un vector calcular el maximo y guardarlo en una variable C
 
+; .data
+; V: .word 4,10,512,8,16
+; C: .word 0
+
+; .code
+; daddi r2,r0,0;  maximo inicial(cero)
+; daddi r3,r0, 5; cantidad elementos
+; daddi r5,r0, 0; Desplazamiento
+; loop: ld r1, V(r5)
+;       slt r4, r1, r2  ; si r1 es menor que el maximo r4=1
+;       bnez r4, salto
+;       daddi r2,r1,0
+; salto: daddi r5,r5,8
+;       daddi r3,r3,-1
+;       bnez r3, loop
+; sd r2, C(r0)
+
+;Calculo de cantidad de elementos positivos del vector
+; .data
+; V: .word 10,9,8,7,-5,-7,4,-2,0,-1
+; res: .word 0
+
+; .code
+; daddi $t0,$0,0
+; daddi $t1,$0,10
+; daddi $t2,$0, 0
+
+; loop: ld $t3, V($t2)
+;       slti $t4, $t3, 0
+;       bnez $t4, sigue
+;       daddi $t0, $t0, 1
+;       sigue: daddi $t2, $t2, 8
+;       daddi $t1, $t1,-1
+;       bnez $t1, loop
+; sd $t0, res ($0)
+; halt
+
+;CONTAR ELEMENTOS DE LA CADENA
+; .data
+; cadena: .asciiz "Arquitectura"
+; longitud: .word 0
+; .code
+; daddi $t0, $0,0
+; daddi $t1, $0, cadena
+; loop: lbu $t2, 0($t1)
+;       beq $t2, $0, fin
+;       daddi $t0, $t0,1
+;       daddi $t1, $t1, 1
+;       j loop
+; fin: sd $t0, longitud($0)
+; halt
+
+;CONTAR APARICIONES DE CARACTER
 .data
-V: .word 4,10,512,8,16
-C: .word 0
+cadena: .asciiz "abcsrdasrtd"
+car: .ascii "a"
+cant: .word 0
 
 .code
-daddi r2,r0,0;  maximo inicial(cero)
-daddi r3,r0, 5; cantidad elementos
-daddi r5,r0, 0; Desplazamiento
-loop: ld r1, V(r5)
-      slt r4, r1, r2  ; si r1 es menor que el maximo r4=1
-      bnez r4, salto
-      daddi r2,r1,0
-salto: daddi r5,r5,8
-      daddi r3,r3,-1
-      bnez r3, loop
-sd r2, C(r0)
+daddi $t0, $0, 0; cantidad
+daddi $t1, $0, cadena
+lbu $t2, car($0)
+loop: lbu $t3, 0($t1)
+      beq $t3, $0, fin
+      bne $t3, $t2, sigue
+      daddi $t0, $t0,1
+      sigue: daddi $t1, $t1,1
+      j loop
+fin: sd $t0, cant($0)
+halt
