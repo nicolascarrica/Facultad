@@ -1,0 +1,107 @@
+programa ejemplo
+procesos
+  proceso JuntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso DepositarFlores (E flores:numero)
+  variables
+    miAv, miCa: numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    repetir flores
+      depositarFlor
+    Pos(miAv, miCa)
+    LiberarEsquina(10,10)
+  fin
+areas
+  cuadrante: AreaPC (40,40,60,60)
+  areaDep: AreaPC (10,10,10,10)
+  area1: AreaP(1,1,1,1)
+  area2: AreaP(2,1,2,1)
+  area3: AreaP(3,1,3,1)
+  areaF: AreaP(4,1,4,1)
+robots
+  robot florero
+  variables
+    id:numero
+    ok:boolean
+    miAv, miCa, avenida, calle: numero
+    flores:numero
+  comenzar
+    RecibirMensaje(id, rf)
+    RecibirMensaje(ok, rf)
+    flores:=0
+    miAv:=PosAv
+    miCa:=PosCa
+    mientras(ok)
+      RecibirMensaje(avenida, rf)
+      RecibirMensaje(calle, rf)
+      BloquearEsquina(avenida, calle)
+      Pos(avenida, calle)
+      JuntarFlores(flores)
+      Pos(miAv, miCa)
+      LiberarEsquina(avenida, calle)
+      RecibirMensaje(ok, rf)
+    DepositarFlores(flores)
+    EnviarMensaje(flores, rf)     
+  fin
+  robot fiscal
+  variables
+    calle, avenida, id:numero
+    totalFlores,flores:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    totalFlores:=0
+    repetir 8
+      Random(id, 1,3)
+      Random(calle, 40,60)
+      Random(avenida, 40,60)
+      si(id=1)
+        EnviarMensaje(V, r1)
+        EnviarMensaje(avenida, r1)
+        EnviarMensaje(calle, r1)
+      sino
+        si(id=2)
+          EnviarMensaje(V, r2)
+          EnviarMensaje(avenida, r2)
+          EnviarMensaje(calle, r2)
+        sino
+          EnviarMensaje(V, r3)
+          EnviarMensaje(avenida,r3)          
+          EnviarMensaje(calle, r3)
+    EnviarMensaje(F, r1)
+    EnviarMensaje(F, r2)
+    EnviarMensaje(F, r3)
+    repetir 3
+      RecibirMensaje(flores, *)
+      totalFlores:=totalFlores+flores
+    Informar(totalFlores)
+        
+  fin
+variables
+  r1,r2,r3: florero
+  rf: fiscal
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, cuadrante)
+  AsignarArea(r1, areaDep)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, cuadrante)
+  AsignarArea(r2, areaDep)
+  AsignarArea(r3, area3)
+  AsignarArea(r3, cuadrante)
+  AsignarArea(r3, areaDep)
+  AsignarArea(rf, areaF)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,1)
+  Iniciar(r3, 3,1)
+  Iniciar(rf, 4,1)
+fin

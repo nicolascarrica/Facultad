@@ -1,0 +1,109 @@
+programa parcial17
+procesos
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  
+  proceso JuntarPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  
+  proceso DepositarPapeles
+  variables
+    miAv, miCa:numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    BloquearEsquina(99,99)
+    Pos(99,99)
+    mientras HayPapelEnLaBolsa
+      depositarPapel
+    Pos(miAv, miCa)
+    LiberarEsquina(99,99)
+  fin
+  
+  proceso Escalon(E alto: numero; E ancho:numero; ES esquinas:numero)
+  comenzar
+    repetir alto
+      si HayPapelEnLaEsquina
+        JuntarPapeles
+        esquinas:=esquinas + 1
+      mover
+    DepositarPapeles
+    derecha
+    repetir ancho
+      si HayPapelEnLaEsquina
+        JuntarPapeles
+        esquinas:=esquinas +1
+      mover
+    izquierda
+  fin
+areas
+  area1: AreaP (2,1,18,13)
+  area2: AreaP (32,1,48,13)
+  area3: AreaP (62,1,78,13)
+  areaf: AreaP (1,1,1,1)
+  areaDep: AreaPC(99,99,99,99)
+robots
+  robot papelero
+  variables
+    id:numero
+    ok:boolean
+    esquinas:numero
+    alto, ancho:numero
+  comenzar
+    esquinas:=0
+    Random(alto, 1,3)
+    Random(ancho, 2,4)
+    RecibirMensaje(id, rf)
+    repetir 4
+      Escalon(alto, ancho, esquinas)
+      EnviarMensaje(V, rf)
+      RecibirMensaje(ok, rf)
+    EnviarMensaje(esquinas, rf)
+  fin
+  
+  robot fiscal
+  variables
+    esquinas, totalEsquinas:numero
+    ok:boolean
+  comenzar
+    totalEsquinas:=0
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    repetir 4
+      repetir 3
+        RecibirMensaje(ok,*)
+      EnviarMensaje(V, r1)
+      EnviarMensaje(V, r2)
+      EnviarMensaje(V, r3)
+    repetir 3
+      RecibirMensaje(esquinas, *)
+      totalEsquinas:=totalEsquinas + esquinas
+    Pos(99,99)
+    JuntarPapeles
+    Informar(totalEsquinas)
+    
+  fin
+variables
+  r1,r2,r3:papelero
+  rf: fiscal
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, areaDep)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, areaDep)
+  AsignarArea(r3, area3)
+  AsignarArea(r3, areaDep)
+  AsignarArea(rf, areaf)
+  AsignarArea(rf, areaDep)
+  Iniciar(rf, 1,1)
+  Iniciar(r1, 2,1)
+  Iniciar(r2, 32,1)
+  Iniciar(r3, 62,1)
+fin

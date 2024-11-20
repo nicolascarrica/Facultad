@@ -1,0 +1,102 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejemplo
+procesos
+  proceso JuntarFlores(ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso Cuadrado(E lado: numero; ES flores:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        JuntarFlores(flores)
+        mover
+      derecha
+  fin
+  
+  proceso DepositarDeAUna(E flores:numero)
+  variables
+    miAv, miCa:numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    repetir flores
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      depositarFlor
+      Pos(miAv, miCa)
+      LiberarEsquina(50,50)
+  fin
+areas
+  area1: AreaP (1,1,6,18)
+  area2: AreaP(8,1,13,18)
+  area3: AreaP(15,1,20,18)
+  areaS: AreaP(22,1,22,1)
+  areaDep: AreaPC (50,50,50,50)
+robots
+  robot cliente
+  variables
+    id:numero
+    flores,lado:numero
+    calle:numero
+  comenzar
+    flores:=0
+    RecibirMensaje(id, rs)
+    repetir 3
+      calle:=PosCa
+      EnviarMensaje(id, rs)
+      RecibirMensaje(lado, rs)
+      Cuadrado(lado, flores)
+      calle:= calle + lado + 1
+      Pos(PosAv, calle)
+    DepositarDeAUna(flores)
+    EnviarMensaje(flores, rs)
+  fin
+  robot servidor
+  variables
+    id:numero
+    total,flores,lado:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    repetir 3
+      repetir 3
+        RecibirMensaje(id, *)
+        Random(lado, 1,5)
+        si(id=1)
+          EnviarMensaje(lado, r1)
+        sino
+          si(id=2)
+            EnviarMensaje(lado,r2)
+          sino
+            EnviarMensaje(lado,r3)
+    repetir 3
+      RecibirMensaje(flores,*)
+    Pos(50,50)
+    JuntarFlores(total)
+    Informar(total)  
+  fin
+variables
+  r1,r2,r3: cliente
+  rs: servidor
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, areaDep)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, areaDep)
+  AsignarArea(r3, area3)
+  AsignarArea(r3, areaDep)
+  AsignarArea(rs, areaS)
+  AsignarArea(rs, areaDep)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 8,1)
+  Iniciar(r3, 15,1)
+  Iniciar(rs, 22,1)
+fin

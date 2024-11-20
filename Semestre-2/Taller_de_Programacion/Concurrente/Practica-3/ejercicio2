@@ -1,0 +1,192 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejercicio2
+procesos
+  proceso JuntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores + 1
+  fin
+  
+  proceso JuntarPapeles(ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+ 1
+  fin
+  
+  proceso Izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  
+  proceso FloresRecorrido1 (ES flores: numero)
+  variables
+    cantidad:numero
+  comenzar
+    cantidad:=5
+    JuntarFlores(flores)
+    repetir 4
+      repetir cantidad
+        mover
+      JuntarFlores(flores)
+      derecha
+      repetir cantidad
+        mover
+      JuntarFlores(flores)
+      Izquierda
+      cantidad:=cantidad-1
+  fin
+  proceso EscalonMedioF(ES flores:numero)
+  comenzar
+    mover
+    JuntarFlores(flores)
+    derecha
+    BloquearEsquina(16,16)
+    mover
+    EnviarMensaje(1, robot3)
+    JuntarFlores(flores)
+    repetir 2
+      derecha
+    mover
+    LiberarEsquina(16,16)
+  fin
+  
+  proceso FloresRecorrido2(ES flores:numero)
+  variables
+    cantidad:numero
+  comenzar
+    cantidad:=2
+    repetir 4
+      repetir cantidad
+        mover
+      JuntarFlores(flores)
+      derecha
+      repetir cantidad
+        mover
+      JuntarFlores(flores)
+      Izquierda
+      cantidad:=cantidad+1
+  fin
+  
+  proceso RecorridoFlorero
+  variables
+    flores:numero
+  comenzar
+    flores:=0
+    FloresRecorrido1(flores)
+    EscalonMedioF(flores)
+    FloresRecorrido2(flores)
+    Informar(flores)
+    EnviarMensaje(V, robot3)
+  fin
+  
+  proceso PapelesRecorrido1(ES papeles:numero)
+  variables
+    cantidad:numero
+  comenzar
+    cantidad:=5
+    JuntarPapeles(papeles)
+    repetir 4
+      repetir cantidad
+        mover
+      JuntarPapeles(papeles)
+      Izquierda
+      repetir cantidad
+        mover
+      JuntarPapeles(papeles)
+      derecha
+      cantidad:=cantidad - 1
+  fin
+  
+  proceso EscalonMedioP(ES papeles:numero)
+  comenzar
+    mover
+    JuntarPapeles(papeles)
+    Izquierda
+    BloquearEsquina(16,16)
+    mover
+    EnviarMensaje(2, robot3)
+    JuntarPapeles(papeles)
+    repetir 2
+      derecha
+    mover
+    LiberarEsquina(16,16)  
+  fin
+  
+  proceso PapelesRecorrido2(ES papeles:numero)
+  variables
+    cantidad:numero
+  comenzar
+    cantidad:=2
+    repetir 4
+      repetir cantidad
+        mover
+      JuntarPapeles(papeles)
+      Izquierda
+      repetir cantidad
+        mover
+      JuntarPapeles(papeles)
+      derecha
+      cantidad:=cantidad + 1
+  fin
+  
+  proceso RecorridoPapelero
+  variables
+    papeles:numero
+  comenzar
+    papeles:=0
+    PapelesRecorrido1(papeles)
+    EscalonMedioP(papeles)
+    PapelesRecorrido2(papeles)
+    Informar(papeles)
+    EnviarMensaje(V, robot3)
+  fin
+areas
+  area1: AreaP (1,1,14,30)
+  area1b: AreaP (15,2,15,30)
+  area2: AreaP (17,1,31,30)
+  medio: AreaPC (16,16,16,16)
+  areaF: AreaP (15,1,15,1)
+robots
+  robot florero
+  comenzar
+    RecorridoFlorero
+  fin
+  robot papelero
+  comenzar
+    RecorridoPapelero
+  fin
+  robot robotFiscal
+  variables
+    id:numero
+    ganador:numero
+    termino:boolean
+  comenzar
+    RecibirMensaje(id, *)
+    ganador:=id
+    RecibirMensaje(id, *)
+    repetir 2
+      RecibirMensaje(termino, *)
+    Informar('Ganador', ganador)
+  fin
+variables
+  robot1: florero
+  robot2: papelero
+  robot3: robotFiscal
+comenzar
+  AsignarArea(robot1, area1)
+  AsignarArea(robot1, area1b)
+  AsignarArea(robot1, medio)
+  AsignarArea(robot2, area2)
+  AsignarArea(robot2, medio)
+  AsignarArea(robot3, areaF)
+  Iniciar(robot1, 1,1)
+  Iniciar(robot2, 31,1)
+  Iniciar(robot3, 15,1)
+fin

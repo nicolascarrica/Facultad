@@ -1,0 +1,96 @@
+programa ejemplo
+procesos
+  proceso JuntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso DepositarDeAUna(E flores:numero)
+  variables
+    miAv,miCa:numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    repetir flores
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      depositarFlor
+      Pos(miAv, miCa)
+      LiberarEsquina(50,50)
+  fin
+  
+  proceso Cuadrado(ES flores:numero; E lado:numero)
+  variables
+    calle:numero
+  comenzar
+    repetir 4
+      repetir lado
+        JuntarFlores(flores)
+        mover
+      derecha
+    calle:=PosCa + lado + 1
+    Pos(PosAv, calle)
+  fin
+areas
+  area1: AreaP (1,1,6,30)
+  area2: AreaP(8,1,13,30)
+  area3: AreaP(15,1,20,30)
+  areaF: AreaP(51,1,51,1)
+  areaDep: AreaPC(50,50,50,50)
+robots
+  robot florero
+  variables
+    lado,id:numero
+    flores:numero
+    ok:boolean
+  comenzar
+    RecibirMensaje(id, rc)
+    flores:=0
+    repetir 5
+      Random(lado, 1,5)
+      Cuadrado(flores, lado)
+      si(id=1)
+        EnviarMensaje(V,r2)
+        EnviarMensaje(V,r3)
+        RecibirMensaje(ok, r2)
+        RecibirMensaje(ok, r3)
+      sino
+        si(id=2)
+          EnviarMensaje(V,r1)
+          EnviarMensaje(V,r3)
+          RecibirMensaje(ok, r1)
+          RecibirMensaje(ok, r3)
+        sino
+          EnviarMensaje(V,r1)
+          EnviarMensaje(V,r2)
+          RecibirMensaje(ok, r1)
+          RecibirMensaje(ok, r2)
+    DepositarDeAUna(flores)
+  fin
+  robot coordinador
+  variables
+    id:numero
+    ok:boolean
+    flores, totalFlores:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+  fin
+variables
+  r1,r2,r3: florero
+  rc: coordinador
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, areaDep)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, areaDep)
+  AsignarArea(r3, area3)
+  AsignarArea(r3, areaDep)
+  AsignarArea(rc, areaF)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 8,1)
+  Iniciar(r3, 15,1)
+  Iniciar(rc, 51,1)
+fin

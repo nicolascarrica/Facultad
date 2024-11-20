@@ -1,0 +1,153 @@
+programa ejemplo
+procesos
+  proceso VaciarBolsa
+  comenzar
+    mientras HayFlorEnLaBolsa
+      depositarFlor
+    mientras HayPapelEnLaBolsa
+      depositarPapel
+  fin
+  proceso AsignarIds
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+  fin
+  proceso InicioCarrera
+  comenzar
+    EnviarMensaje(V, r1)
+    EnviarMensaje(V, r2)
+    EnviarMensaje(V, r3)
+    EnviarMensaje(V, r4)
+  fin
+  proceso PrimeraEtapa(ES flores: numero)
+  comenzar
+    mientras PosAv<20
+      si HayFlorEnLaEsquina
+        tomarFlor
+        flores:=flores+1
+      mover
+    si HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso SegundaEtapa(ES papeles: numero)
+  comenzar
+    mientras PosAv>2
+      si HayPapelEnLaEsquina
+        tomarPapel
+        papeles:=papeles+1
+      mover
+    si HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso DepositarDeAUnaFlor(E cant:numero)
+  variables
+    miAv, miCa:numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    repetir cant
+      BloquearEsquina(1,6)
+      Pos(1,6)
+      depositarFlor
+      Pos(miAv, miCa)
+      LiberarEsquina(1,6)
+  fin
+  proceso DepositarDeAUnPapel(E cant:numero)
+  variables
+    miAv, miCa:numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    repetir cant
+      BloquearEsquina(1,6)
+      Pos(1,6)
+      depositarPapel
+      Pos(miAv, miCa)
+      LiberarEsquina(1,6)
+  fin
+areas
+  area1: AreaP (1,1,100,1)
+  area2: AreaP (1,2,100,2)
+  area3: AreaP (1,3,100,3)
+  area4: AreaP (1,4,100,4)
+  areaf: AreaP (1,5,1,5)
+  areaDep: AreaPC (1,6,1,6)
+robots
+  robot corredor
+  variables
+    gan1,gan2,id:numero
+    ok:boolean
+    papeles, flores:numero
+    avIn, caIn:numero
+  comenzar
+    VaciarBolsa
+    avIn:=PosAv
+    caIn:=PosCa
+    flores:=0
+    RecibirMensaje(id, rf)
+    derecha
+    RecibirMensaje(ok, rf)
+    mover
+    PrimeraEtapa(flores)
+    DepositarDeAUnaFlor(flores)
+    EnviarMensaje(id, rf)
+    RecibirMensaje(gan1, rf)
+    RecibirMensaje(gan2, rf)
+    si((gan1=id)|(gan2=id))
+      repetir 2
+        derecha
+      SegundaEtapa(papeles)
+      DepositarDeAUnPapel(papeles)
+      EnviarMensaje(id, rf)
+    Pos(avIn, caIn)
+  fin
+  robot fiscal
+  variables
+    id, g1, g2:numero
+    ok:boolean
+    ganador:numero
+  comenzar
+    AsignarIds
+    InicioCarrera
+    RecibirMensaje(id,*)
+    g1:=id
+    RecibirMensaje(id,*)
+    g2:=id
+    repetir 2
+      RecibirMensaje(id,*)
+    EnviarMensaje(g1,r1)
+    EnviarMensaje(g1,r2)
+    EnviarMensaje(g1,r3)
+    EnviarMensaje(g1,r4)
+    EnviarMensaje(g2,r1)
+    EnviarMensaje(g2,r2)
+    EnviarMensaje(g2,r3)
+    EnviarMensaje(g2,r4)
+    RecibirMensaje(id, *)
+    ganador:=id
+    RecibirMensaje(id,*)
+    Informar(ganador)
+  fin
+variables
+  r1,r2,r3,r4: corredor
+  rf:fiscal
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, areaDep)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, areaDep)
+  AsignarArea(r3, area3)
+  AsignarArea(r3, areaDep)
+  AsignarArea(r4, area4)
+  AsignarArea(r4, areaDep)
+  AsignarArea(rf, areaf)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 1,2)
+  Iniciar(r3, 1,3)
+  Iniciar(r4, 1,4)
+  Iniciar(rf, 1,5)
+fin

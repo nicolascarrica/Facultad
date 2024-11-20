@@ -1,0 +1,150 @@
+programa ejemplo
+procesos
+  proceso JuntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles(ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  
+  proceso recorrerAvenida(ES flores:numero)
+  variables
+    x:numero
+  comenzar
+    mientras PosCa<97
+      JuntarFlores(flores)
+      mover
+    JuntarFlores(flores)
+    x:=PosAv
+    BloquearEsquina(x, 98)
+    mover
+    JuntarFlores(flores)
+    BloquearEsquina(x,99)
+    mover
+    LiberarEsquina(x,98)
+    JuntarFlores(flores)
+    mover
+    LiberarEsquina(x,99)
+    JuntarFlores (flores)
+  fin
+  
+  proceso recorrerCalle(ES papeles: numero)
+  variables
+    y: numero
+  comenzar
+    y:=PosCa
+    derecha
+    JuntarPapeles(papeles)
+    BloquearEsquina(2, y)
+    mover
+    JuntarPapeles(papeles)
+    BloquearEsquina(3,y)
+    mover
+    LiberarEsquina(2,y)
+    JuntarPapeles(papeles)
+    mover
+    LiberarEsquina(3,y)
+    mientras PosAv <100
+      JuntarPapeles(papeles)
+      mover
+    JuntarPapeles(papeles) 
+  fin
+areas
+  AreaF: AreaP (1,1,1,1)
+  Esquinas: AreaPC(2,98,3,99)
+  AreaR1: AreaP(2,1,2,97)
+  AreaR1a: AreaP(2,100,2,100)
+  AreaR2: AreaP(3,1,3,97)
+  AreaR2a: AreaP(3,100,3,100)
+  AreaA1: AreaP(4,98,100,98)
+  AreaA1a: AreaP(1,98,1,98)
+  AreaA2: AreaP(4,99,100,99)
+  AreaA2a:AreaP(1,99,1,99)
+robots
+  robot EquipoR
+  variables
+    id:numero
+    flores:numero
+  comenzar
+    flores:=0
+    RecibirMensaje(id, rj)
+    recorrerAvenida(flores)
+    EnviarMensaje(id, rj)
+    EnviarMensaje(flores, rj)
+  fin
+  robot EquipoA
+  variables
+    id:numero
+    papeles:numero
+  comenzar
+    papeles:=0
+    RecibirMensaje(id, rj)
+    recorrerCalle(papeles)
+    EnviarMensaje(id, rj)
+    EnviarMensaje(papeles, rj)
+  fin
+  robot Fiscal
+  variables
+    id:numero
+    totalPapeles, totalFlores, cant:numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, a1)
+    EnviarMensaje(4, a2)
+    totalPapeles:=0
+    totalFlores:=0
+    repetir 4
+      RecibirMensaje(id, *)
+      si(id=1)
+        RecibirMensaje(cant, r1)
+        totalFlores:=totalFlores+cant
+      sino
+        si(id=2)
+          RecibirMensaje(cant, r2)
+          totalFlores:=totalFlores+cant
+        sino
+          si(id=3)
+            RecibirMensaje(cant, a1)
+            totalPapeles:=totalPapeles+cant
+          sino
+            RecibirMensaje(cant, a2)
+            totalPapeles:=totalPapeles+cant
+    si(totalFlores>totalPapeles)
+      Informar("ganador", 1)
+    sino
+      si(totalFlores<totalPapeles)
+        Informar('ganador',2)
+      sino
+        Informar('Empate',0) 
+  fin
+variables
+  r1,r2: EquipoR
+  a1,a2: EquipoA
+  rj: Fiscal
+comenzar
+  AsignarArea(r1, AreaR1)
+  AsignarArea(r1, AreaR1a)
+  AsignarArea(r1, Esquinas)
+  AsignarArea(r2, AreaR2)
+  AsignarArea(r2, AreaR2a)
+  AsignarArea(r2, Esquinas)
+  AsignarArea(a1, AreaA1)
+  AsignarArea(a1, AreaA1a)
+  AsignarArea(a1, Esquinas)
+  AsignarArea(a2, AreaA2)
+  AsignarArea(a2, AreaA2a)
+  AsignarArea(a2, Esquinas)
+  AsignarArea(rj, AreaF)
+  Iniciar(r1, 2,1)
+  Iniciar(r2, 3,1)
+  Iniciar(a1, 1,98)
+  Iniciar(a2, 1,99)
+  Iniciar(rj, 1,1)
+fin

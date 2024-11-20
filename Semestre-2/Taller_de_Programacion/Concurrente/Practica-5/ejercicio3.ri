@@ -1,0 +1,106 @@
+programa ejemplo{Revisar, no esta bien}
+procesos
+  proceso JuntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  
+  proceso CosecharEsquina (ES flores:numero)
+  comenzar
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    JuntarFlores(flores)
+    Pos(1,5)
+    LiberarEsquina(10,10)
+  fin
+  
+  proceso Avanzar (ES pasos:numero)
+  comenzar
+    si(PosAv<100)
+      mover
+      pasos:=pasos+1
+  fin
+  
+  proceso VaciarBolsa
+  variables
+    miCa, miAv:numero
+  comenzar
+    miCa:=PosCa
+    miAv:=PosAv
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    mientras HayFlorEnLaBolsa
+      depositarFlor
+    Pos(miAv, miCa)
+    LiberarEsquina(10,10)
+  fin
+areas
+  Area1: AreaP (1,3,100,3)
+  Area2: AreaP (1,4,100,4)
+  AreaDep: AreaPC(10,10,10,10)
+  AreaRC: AreaP(1,5,1,5)
+robots
+  robot recolectores
+  variables
+    id:numero
+    miAv, miCa:numero
+    flores, pasos:numero
+  comenzar
+    derecha
+    pasos:=0
+    flores:=0
+    mientras(PosAv<100)
+      JuntarFlores(flores)
+      Avanzar(pasos)
+      si flores=10
+        VaciarBolsa
+        EnviarMensaje(V, rc)
+        flores:=0
+      si pasos=15
+        VaciarBolsa
+        EnviarMensaje(V, rc)
+        pasos:=0
+    JuntarFlores(flores)
+    si flores=10
+      VaciarBolsa
+      EnviarMensaje(V, rc)
+    EnviarMensaje(F,rc)
+  fin
+  robot cosechador
+  variables
+    id:numero
+    cosechar:boolean
+    ok1,ok2:boolean
+    flores:numero
+  comenzar
+    ok1:=V
+    ok2:=V
+    flores:=0
+    mientras (ok1 | ok2)
+      RecibirMensaje(cosechar, *)
+      si cosechar=V
+        CosecharEsquina(flores)
+      sino
+        si(ok1=V)
+          ok1:=F
+        sino
+          si ok2=V
+            ok2:=F
+    Informar(flores)
+  fin
+variables
+  r1,r2: recolectores
+  rc: cosechador
+comenzar
+  AsignarArea(r1, Area1)
+  AsignarArea(r1, AreaDep)
+  AsignarArea(r2, Area2)
+  AsignarArea(r2, AreaDep)
+  AsignarArea(rc, AreaRC)
+  AsignarArea(rc, AreaDep)
+  Iniciar(r1, 1,3)
+  Iniciar(r2, 1,4)
+  Iniciar(rc, 1,5)
+fin

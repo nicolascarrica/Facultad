@@ -1,0 +1,65 @@
+programa ejercicio1C
+procesos
+  proceso JuntarFlores(ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso Recorrer(ES flores: numero)
+  comenzar
+    repetir 9
+      mover
+      JuntarFlores(flores)
+    JuntarFlores(flores)
+  fin
+  proceso ObtenerMaximo(E flores:numero; ES maximo:numero)
+  comenzar
+    si(flores > maximo)
+      maximo:=flores
+  fin
+areas
+  ciudad: AreaPC (1,1,6,60)
+robots
+  robot robot1
+  variables
+    flores:numero
+  comenzar
+    flores:=0
+    Recorrer(flores)
+    EnviarMensaje(flores, fiscal)
+  fin
+  robot robot2
+  variables
+    flores, maximo:numero
+  comenzar
+    maximo:=0
+    repetir 6
+      RecibirMensaje(flores,*)
+      ObtenerMaximo(flores, maximo)
+    Informar('maximo', maximo)
+  fin
+variables
+  r1: robot1
+  r2: robot1
+  r3: robot1
+  r4: robot1
+  r5: robot1
+  r6: robot1
+  fiscal: robot2
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  AsignarArea(r3, ciudad)
+  AsignarArea(r4, ciudad)
+  AsignarArea(r5, ciudad)
+  AsignarArea(r6, ciudad)
+  AsignarArea(fiscal, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,11)
+  Iniciar(r3, 3,21)
+  Iniciar(r4, 4,31)
+  Iniciar(r5, 5,41)
+  Iniciar(r6, 6,51)
+  Iniciar(fiscal, 2,1)
+fin

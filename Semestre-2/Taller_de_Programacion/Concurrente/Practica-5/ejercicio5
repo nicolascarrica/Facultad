@@ -1,0 +1,82 @@
+programa ejercicio5
+procesos
+  proceso JuntarPapel(E cant:numero)
+  variables
+    miCa, miAv:numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    repetir cant
+      BloquearEsquina(100,1)
+      Pos(100,1)
+      tomarPapel
+      Pos(miAv, miCa)
+      LiberarEsquina(100,1)
+      depositarPapel
+  fin
+  
+  proceso DepositarPapel(E cant:numero)
+  comenzar
+    BloquearEsquina(100,1)
+    Pos(100,1)
+    repetir cant
+      depositarPapel
+    Pos(13,1)
+    LiberarEsquina(100,1)
+  fin
+areas
+  AreaPapeles: AreaPC (100,1,100,1)
+  Area1: AreaP(10,1,10,1)
+  Area2: AreaP(11,1,11,1)
+  Area3: AreaP(12,1,12,1)
+  AreaS: AreaP(13,1,13,1)
+robots
+  robot cliente
+  variables
+    id:numero
+    cantidad:numero
+  comenzar
+    RecibirMensaje(id, rs)
+    repetir 4
+      EnviarMensaje(id, rs)
+      RecibirMensaje(cantidad, rs)
+      JuntarPapel(cantidad)
+  fin
+  robot servidor
+  variables
+    id:numero
+    cantidad:numero
+    seguir:boolean
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    repetir 12
+      RecibirMensaje(id, *)
+      Random(cantidad, 1,5)
+      DepositarPapel(cantidad)
+      si(id=1)
+        EnviarMensaje(cantidad, r1)
+      sino 
+        si(id=2)
+          EnviarMensaje(cantidad, r2)
+        sino
+          EnviarMensaje(cantidad, r3)
+  fin
+variables
+  r1,r2,r3: cliente
+  rs:  servidor
+comenzar
+  AsignarArea(r1, AreaPapeles)
+  AsignarArea(r1, Area1)
+  AsignarArea(r2, AreaPapeles)
+  AsignarArea(r2, Area2)
+  AsignarArea(r3, AreaPapeles)
+  AsignarArea(r3, Area3)
+  AsignarArea(rs, AreaPapeles)
+  AsignarArea(rs, AreaS)
+  Iniciar(r1, 10,1)
+  Iniciar(r2, 11,1)
+  Iniciar(r3, 12,1)
+  Iniciar(rs, 13,1)  
+fin

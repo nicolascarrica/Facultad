@@ -1,0 +1,114 @@
+programa ejemplo
+procesos
+  proceso JuntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso JuntarPapeles(ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso DepositarDeAUna(E flores:numero; E papeles:numero)
+  variables
+    miCa,miAv: numero
+  comenzar
+    miCa:=PosCa
+    miAv:=PosAv
+    repetir flores
+      BloquearEsquina(21,21)
+      Pos(21,21)
+      depositarFlor
+      Pos(miAv, miCa)
+      LiberarEsquina(21,21)
+    repetir papeles
+      BloquearEsquina(22,22)
+      Pos(22,22)
+      depositarPapel
+      Pos(miAv, miCa)
+      LiberarEsquina(22,22)
+  fin
+  
+  proceso Lado(E pasos:numero; ES cantidad:numero)
+  variables
+    flores:numero
+    papeles:numero
+  comenzar
+    flores:=0
+    papeles:=0
+    repetir pasos
+      JuntarFlores(flores)
+      JuntarPapeles(papeles)
+      mover
+    cantidad:=flores+papeles
+    DepositarDeAUna(flores, papeles)
+  fin
+areas
+  area1: AreaP (1,1,20,20)
+  area2: AreaP (21,1,40,20)
+  areaC: AreaP (23,23,23,23)
+  areaPap: AreaPC(22,22,22,22)
+  areaFlo: AreaPC(21,21,21,21)
+robots
+  robot recolector
+  variables
+    id:numero
+    cantidad, pasos:numero
+  comenzar
+    RecibirMensaje(id,rc)
+    RecibirMensaje(pasos, rc)
+    repetir 4
+      cantidad:=0
+      Lado(pasos, cantidad)
+      EnviarMensaje(id, rc)
+      EnviarMensaje(cantidad, rc)
+      derecha
+  fin
+  robot coordinador
+  variables
+    pasos:numero
+    id, idMax:numero
+    cantidad, cant1, cant2: numero
+  comenzar
+    cant1:=0
+    cant2:=0
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    Random(pasos, 1,20)
+    EnviarMensaje(pasos, r1)
+    Random(pasos, 1,20)
+    EnviarMensaje(pasos, r2)
+    repetir 2
+      repetir 4
+        RecibirMensaje(id, *)
+        si (id=1)
+          RecibirMensaje(cantidad, r1)
+          cant1:=cant1+cantidad
+        sino
+          RecibirMensaje(cantidad, r2)
+          cant2:=cant2+cantidad
+    si (cant1>cant2)
+      idMax:=1
+    sino
+      idMax:=2
+    Informar(idMax)
+      
+  fin
+variables
+  r1,r2: recolector
+  rc: coordinador
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, areaPap)
+  AsignarArea(r1, areaFlo)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, areaPap)
+  AsignarArea(r2, areaFlo)
+  AsignarArea(rc, areaC)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 21,1)
+  Iniciar(rc, 23,23)
+fin

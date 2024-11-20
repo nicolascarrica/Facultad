@@ -1,0 +1,133 @@
+programa ejemplo
+procesos
+  proceso JuntarFlores(ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso Recorrido(ES flores:numero; E pasos:numero)
+  comenzar
+    repetir pasos
+      JuntarFlores(flores)
+      mover
+    derecha
+    repetir pasos
+      JuntarFlores(flores)
+      mover
+    JuntarFlores(flores)
+  fin
+  proceso DepositarDeAUna(E flores: numero)
+  variables
+    miAv, miCa:numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    repetir flores
+      BloquearEsquina(20,20)
+      Pos(20,20)
+      depositarFlor
+      Pos(miAv, miCa)
+      LiberarEsquina(20,20)
+  fin
+  
+areas
+  Area1A1: AreaP (1,1,1,11)
+  Area1A2: AreaP(2,11,11,11)
+  Area2A1: AreaP(2,1, 11,1)
+  Area2A2: AreaP(11,2,11,10)
+  Area1B1: AreaP(13,1,13,11)
+  Area1B2: AreaP(14,11,23,11)
+  Area2B1: AreaP(14,1,23,1)
+  Area2B2: AreaP(23,2,23,10)
+  areaF: AreaP(30,1,30,1)
+  AreaDep: AreaPC(20,20,20,20)
+robots
+  robot primero
+  variables
+    id:numero
+    flores:numero
+  comenzar
+    flores:=0
+    RecibirMensaje(id, rf)
+    Recorrido(flores,10)
+    si (id=1)
+      EnviarMensaje(V, r2A)
+    sino
+      EnviarMensaje(V, r2B)
+    EnviarMensaje(id, rf)
+    EnviarMensaje(flores, rf)     
+    DepositarDeAUna(flores)
+  fin
+  robot segundo
+  variables
+    id:numero
+    flores:numero
+    ok:boolean
+  comenzar
+    flores:=0
+    RecibirMensaje(id, rf)
+    ok:=F
+    repetir 2
+      derecha
+    si(id=2)
+      RecibirMensaje(ok, r1A)
+    sino
+      RecibirMensaje(ok, r1B)
+    si(ok)
+      Recorrido(flores, 9)
+    ok:=F
+    EnviarMensaje(id, rf)
+    EnviarMensaje(flores, rf)
+    DepositarDeAUna(flores)
+  fin
+  robot fiscal
+  variables
+    FloEquipoA, FloEquipoB:numero
+    flores:numero
+    id:numero
+  comenzar
+    FloEquipoA:=0
+    FloEquipoB:=0
+    EnviarMensaje(1, r1A)
+    EnviarMensaje(2, r2A)
+    EnviarMensaje(3, r1B)
+    EnviarMensaje(4, r2B)
+    repetir 4
+      RecibirMensaje(id, *)
+      RecibirMensaje(flores, *)
+      si((id=1)|(id=2))
+        FloEquipoA:=FloEquipoA + flores
+      sino
+        FloEquipoB:=FloEquipoB + flores
+    si(FloEquipoA>FloEquipoB)
+      Informar('Ganador', 1)
+      Informar(FloEquipoA)
+    sino
+      Informar('Ganador',2)
+      Informar(FloEquipoB)
+  fin
+variables
+  r1A, r1B: primero
+  r2A, r2B: segundo
+  rf: fiscal
+comenzar
+  AsignarArea(r1A, Area1A1)
+  AsignarArea(r1A, Area1A2)
+  AsignarArea(r1A, AreaDep)
+  AsignarArea(r2A, Area2A1)
+  AsignarArea(r2A, Area2A2)
+  AsignarArea(r2A, AreaDep)
+  AsignarArea(r1B, Area1B1)
+  AsignarArea(r1B, Area1B2)
+  AsignarArea(r1B, AreaDep)
+  AsignarArea(r2B, Area2B1)
+  AsignarArea(r2B, Area2B2)
+  AsignarArea(r2B, AreaDep)
+  AsignarArea(rf, areaF)
+  Iniciar(r1A, 1,1)
+  Iniciar(r2A, 11,10)
+  Iniciar(r1B, 13,1)
+  Iniciar(r2B, 23,10)
+  Iniciar(rf, 30,1)
+fin

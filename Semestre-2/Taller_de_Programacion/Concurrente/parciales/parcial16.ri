@@ -1,0 +1,105 @@
+programa ejemplo
+procesos
+  proceso JuntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+areas
+  areaF1a: AreaP (6,1,6,1)
+  areaF1b: AreaPC(6,2,6,50)
+  areaF1c: AreaP(6,51, 6,61)
+  areaF2a: AreaP(1,2,5,50)
+  areaF2b: AreaP(7,2, 61,50)
+  areaF: AreaP(100,100,100,100)
+robots
+  robot F1
+  variables
+    id:numero
+    calle: numero
+    flores:numero
+  comenzar
+    flores:=0
+    RecibirMensaje(id, rf)
+    RecibirMensaje(calle, r2)
+    mientras PosCa<(calle-1)
+      JuntarFlores(flores)
+      mover
+    BloquearEsquina(6,calle)
+    mover
+    EnviarMensaje(id, rf)
+    JuntarFlores(flores)
+    mover
+    LiberarEsquina(6,calle)
+    mientras PosCa <61
+      JuntarFlores(flores)
+      mover
+    JuntarFlores(flores)
+    EnviarMensaje(flores, rf)
+  fin
+  robot F2
+  variables
+    id,calle:numero
+    flores:numero
+  comenzar
+    flores:=0
+    RecibirMensaje(id, rf)
+    RecibirMensaje(calle, rf)
+    EnviarMensaje(calle, r1)
+    Pos(1, calle)
+    derecha
+    mientras (PosAv<5)
+      JuntarFlores(flores)
+      mover
+    BloquearEsquina(6, calle)
+    Pos(6,calle)
+    EnviarMensaje(id, rf)
+    JuntarFlores(flores)
+    mover
+    LiberarEsquina(6,calle)
+    mientras PosAv<61
+      JuntarFlores(flores)
+      mover
+    JuntarFlores(flores)
+    EnviarMensaje(flores, rf)
+  fin
+  robot fiscal
+  variables
+    id:numero
+    calle:numero
+    ganador: numero
+    flores: numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    Random(calle, 2,4)
+    EnviarMensaje(calle, r2)
+    RecibirMensaje(id, *)
+    si(id=1)
+      ganador :=1
+    sino
+      ganador:=2
+    si ganador=1
+      RecibirMensaje(flores, r1)
+    sino
+      RecibirMensaje(flores, r2)
+    Informar('Ganador', ganador)
+    Informar('Flores', flores)
+  fin
+variables
+  r1: F1
+  r2: F2
+  rf: fiscal
+comenzar
+  AsignarArea(r1, areaF1a)
+  AsignarArea(r1, areaF1b)
+  AsignarArea(r1, areaF1c)
+  AsignarArea(r2, areaF1b)
+  AsignarArea(r2, areaF2a)
+  AsignarArea(r2, areaF2b)
+  AsignarArea(rf, areaF)
+  Iniciar(r1, 6,1)
+  Iniciar(r2, 1,2)
+  Iniciar(rf, 100,100)
+fin

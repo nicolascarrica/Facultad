@@ -1,0 +1,54 @@
+programa p2eje1a
+procesos
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  
+  proceso Recorrer (ES flores:numero)
+  comenzar
+    repetir 9
+      JuntarFlores(flores)
+      mover
+    JuntarFlores(flores)
+  fin
+
+areas
+  ciudad: AreaPC (1,1,2,20)
+robots
+  robot robot1
+  variables
+    floresR1:numero
+    floresR2:numero
+  comenzar
+    floresR1:=0
+    Recorrer(floresR1)
+    EnviarMensaje(floresR1, r2)
+    RecibirMensaje(floresR2, r2)
+    si(floresR1>floresR2)
+      Informar('Diferencia',floresR1-floresR2)
+  fin
+  
+  robot robot2
+  variables
+    floresR1:numero
+    floresR2:numero
+  comenzar
+    floresR2:=0
+    Recorrer(floresR2)
+    EnviarMensaje(floresR2, r1)
+    RecibirMensaje(floresR1, r1)
+    si(floresR2>floresR1)
+      Informar('Diferencia', floresR2-floresR1)
+  fin
+variables
+  r1: robot1
+  r2: robot2
+comenzar
+  AsignarArea(r1, ciudad)
+  AsignarArea(r2, ciudad)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,11)
+fin

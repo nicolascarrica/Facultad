@@ -1,0 +1,98 @@
+programa ejemplo
+procesos
+  proceso CosecharFlores(E cantidad:numero; ES cosechadas: numero)
+  comenzar
+    repetir cantidad
+      tomarFlor
+      cosechadas:=cosechadas+1
+  fin
+  proceso DepositarFlores(E flores: numero)
+  variables
+    miAv, miCa:numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    BloquearEsquina(10,10)
+    repetir flores
+      depositarFlor
+    Pos(miAv, miCa)
+    LiberarEsquina(10,10)
+  fin
+  
+  proceso Juntar(ES flores: numero)
+  comenzar
+    si HayFlorEnLaEsquina
+      mientras (HayFlorEnLaEsquina)&(flores<10)
+        tomarFlor
+        flores:=flores+1
+  fin
+areas
+  area1: AreaP (1,3,100,3)
+  area2: AreaP (1,4,100,4)
+  areaC: AreaP (1,5,1,5)
+  areaDep: AreaPC(10,10,10,10)
+robots
+  robot recolector
+  variables 
+    flores:numero
+    pasos:numero
+  comenzar
+    EnviarMensaje(V, rc)
+    derecha
+    flores:=0
+    pasos:=0
+    mientras PosAv<100
+      Juntar(flores)
+      mover
+      pasos:=pasos+1
+      si (flores=10)
+        DepositarFlores(flores)
+        EnviarMensaje(V, rc)
+        EnviarMensaje(flores, rc)
+        flores:=0
+      si(pasos=5)
+        DepositarFlores(flores)
+        EnviarMensaje(V, rc)
+        EnviarMensaje(flores, rc)
+        pasos:=0
+    si(flores=10)
+      DepositarFlores(flores)
+      EnviarMensaje(V, rc)
+      EnviarMensaje(flores, rc)
+    EnviarMensaje(F, rc)    
+  fin
+  robot cosechador
+  variables
+    ok1, ok2, cosechar:boolean
+    cosechadas, cantidad: numero
+  comenzar
+    cosechadas:=0
+    RecibirMensaje(ok1, *)
+    RecibirMensaje(ok2, *)
+    mientras((ok1)|(ok2))
+      RecibirMensaje(cosechar, *)
+      si(cosechar=V)
+        RecibirMensaje(cantidad, *)
+        CosecharFlores(cantidad, cosechadas)
+      sino 
+        si(cosechar = F)
+          si(ok1)
+            ok1:=F
+          sino
+            si ok2
+              ok2:=F       
+  fin
+variables
+  r1,r2: recolector
+  rc:cosechador
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, areaDep)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, areaDep)
+  AsignarArea(rc, areaC)
+  AsignarArea(rc, areaDep)
+  Iniciar(r1, 1,3)
+  Iniciar(r2, 1,4)
+  Iniciar(rc, 1,5)
+fin

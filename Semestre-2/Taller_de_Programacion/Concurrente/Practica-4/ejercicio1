@@ -1,0 +1,131 @@
+programa ejemplo
+procesos
+  proceso JuntarFlores
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  
+  proceso DepositarFlores
+  comenzar
+    mientras(PosCa<100)& HayFlorEnLaBolsa
+      depositarFlor
+      mover
+    si (PosCa = 100) & (HayFlorEnLaBolsa)
+      depositarFlor
+  fin
+  
+  proceso AsignarIds
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3,r3)
+  fin
+areas
+  area1: AreaPC (1,1,1,100)
+  area2: AreaPC (2,1,2,100)
+  area3: AreaPC (3,1,3,100)
+  areaS: AreaP(100,100,100,100)
+robots
+  robot cliente
+  variables
+    id:numero
+    cantFlores:numero
+    calle:numero
+    avenida:numero
+    ok:boolean
+  comenzar
+    RecibirMensaje(id, rs)
+    mientras(PosCa<100)
+      Random(cantFlores,1,4)
+      calle:=PosCa + 1
+      avenida:=PosAv
+      EnviarMensaje(id, rs)
+      EnviarMensaje(cantFlores, rs)
+      EnviarMensaje(avenida, rs)
+      EnviarMensaje(calle, rs)
+      RecibirMensaje(ok, rs)
+      BloquearEsquina(avenida, calle)
+      Pos(avenida, calle)
+      JuntarFlores
+      Pos(avenida, calle-1)
+      LiberarEsquina(avenida,calle)
+      DepositarFlores
+    EnviarMensaje(id, rs)
+    EnviarMensaje(0, rs)
+  fin
+  
+  robot servidor
+  variables
+    id:numero
+    cantFlores:numero
+    calle, avenida:numero
+    ok1,ok2,ok3:boolean
+  comenzar
+    ok1:=V
+    ok1:=V
+    ok1:=V
+    JuntarFlores
+    AsignarIds
+    mientras((ok1)|(ok2)|(ok3))
+      RecibirMensaje(id, *)
+      si(id=1)
+        RecibirMensaje(cantFlores, r1)
+        si(cantFlores<>0)
+          RecibirMensaje(avenida, r1)
+          RecibirMensaje(calle, r1)
+          BloquearEsquina(avenida, calle)
+          Pos(avenida, calle)
+          repetir cantFlores
+            depositarFlor
+          Pos(100,100)
+          LiberarEsquina(avenida, calle)
+          EnviarMensaje(V, r1)
+        sino
+          ok1:=F
+      sino
+        si(id=2)
+          RecibirMensaje(cantFlores, r2)
+          si(cantFlores<>0)
+            RecibirMensaje(avenida, r2)
+            RecibirMensaje(calle, r2)
+            BloquearEsquina(avenida, calle)
+            Pos(avenida, calle)
+            repetir cantFlores
+              depositarFlor
+            Pos(100,100)
+            LiberarEsquina(avenida, calle)
+            EnviarMensaje(V, r2)
+          sino
+            ok2:=F
+        sino
+          RecibirMensaje(cantFlores, r3)
+          si(cantFlores<>0)
+            RecibirMensaje(avenida, r3)
+            RecibirMensaje(calle, r3)
+            BloquearEsquina(avenida, calle)
+            Pos(avenida, calle)
+            repetir cantFlores
+              depositarFlor
+            Pos(100,100)
+            LiberarEsquina(avenida, calle)
+            EnviarMensaje(V, r3)
+          sino
+            ok3:=F 
+  fin
+variables
+  r1,r2,r3: cliente
+  rs: servidor
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r2, area2)
+  AsignarArea(r3, area3)
+  AsignarArea(rs, area1)
+  AsignarArea(rs, area2)
+  AsignarArea(rs, area3)
+  AsignarArea(rs, areaS)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 2,1)
+  Iniciar(r3, 3,1)
+  Iniciar(rs, 100,100)
+fin

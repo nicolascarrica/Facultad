@@ -1,0 +1,114 @@
+programa ejemplo
+procesos
+  proceso DejarFlor(E avenida:numero; E calle:numero)
+  variables
+    miAv, miCa: numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    BloquearEsquina(avenida, calle)
+    Pos(avenida, calle)
+    si HayFlorEnLaBolsa
+      depositarFlor
+    Pos(miAv, miCa)
+    LiberarEsquina(avenida,calle)
+  fin
+    
+  proceso JuntarFlor(ES flor: numero; E avenida: numero; E calle:numero)
+  variables
+    miAv, miCa: numero
+  comenzar
+    miAv:=PosAv
+    miCa:=PosCa
+    BloquearEsquina(avenida, calle)
+    Pos(avenida, calle)
+    si HayFlorEnLaEsquina
+      tomarFlor
+      flor:=flor+1
+    Pos(miAv, miCa)
+    LiberarEsquina(avenida,calle)
+  fin
+  
+  proceso AsignarNumero(ES id:numero)
+  comenzar
+    si(PosCa=2)
+      id:=1
+    sino
+      si(PosCa=3)
+        id:=2
+      sino
+        id:=3
+  fin
+areas
+  cuadrante: AreaC (10,10,13,13)
+  areaE: AreaP(1,1,1,1)
+  area1: AreaP(2,2,2,2)
+  area2: AreaP(3,3,3,3)
+  area3: AreaP(4,4,4,4)
+robots
+  robot buscador
+  variables
+    id, flor:numero
+    encontro, buscar:boolean
+    miAv, miCa, avenida, calle:numero
+  comenzar
+    AsignarNumero(id)
+    miAv:=PosCa
+    miCa:=PosCa
+    flor:=0
+    encontro:=F
+    RecibirMensaje(buscar, re)
+    mientras(buscar)
+      Random(avenida, 10,13)
+      Random(calle,10,13)
+      JuntarFlor(flor, avenida, calle)
+      si(flor=1)
+        encontro:=V
+      EnviarMensaje(encontro, re)
+      si(encontro)
+        EnviarMensaje(id, re)
+      RecibirMensaje(buscar, re) 
+  fin
+  robot escondedor
+  variables
+    id, ganador:numero
+    buscar, encontro, continuar:boolean
+    calle, avenida:numero
+  comenzar
+    Random(calle, 10,13)
+    Random(avenida, 10,13)
+    DejarFlor(avenida, calle)
+    buscar:=V
+    continuar:=V
+    mientras(continuar)
+      EnviarMensaje(buscar, r1)
+      EnviarMensaje(buscar, r2)
+      EnviarMensaje(buscar, r3)
+      repetir 3
+        RecibirMensaje(encontro, *)
+      si (encontro)
+        RecibirMensaje(ganador, *)
+        buscar:=F
+        EnviarMensaje(buscar, r1)
+        EnviarMensaje(buscar, r2)
+        EnviarMensaje(buscar, r3)
+        continuar:=F
+    Informar(ganador)
+  fin
+variables
+  r1,r2,r3: buscador
+  re: escondedor
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, cuadrante)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, cuadrante)
+  AsignarArea(r3, area3)
+  AsignarArea(r3, cuadrante)
+  AsignarArea(re, areaE)
+  AsignarArea(re, cuadrante)
+  Iniciar(re, 1,1)
+  Iniciar(r1, 2,2)
+  Iniciar(r2, 3,3)
+  Iniciar(r3, 4,4)
+fin

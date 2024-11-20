@@ -1,0 +1,103 @@
+{Bienvenidos al entorno CMRE.
+Lo siguiente es un código de ejemplo que implementa un
+proceso que recibe un número de avenida como parámetro,
+se posiciona en esa avenida y la recorre.}
+
+programa ejercicio2
+procesos
+  proceso AvanzarDepositar
+  variables
+    papeles:numero
+    finalizar:boolean
+    calle, avenida: numero
+  comenzar
+    papeles:=0
+    avenida:=PosAv
+    finalizar:=F
+    mientras(~finalizar)
+      si (HayPapelEnLaEsquina)
+        tomarPapel
+        papeles:=papeles+1
+      si(papeles=5)
+        calle:=PosCa
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        repetir 5
+          depositarPapel
+        Pos(avenida, calle)
+        LiberarEsquina(50,50)
+        papeles:=0
+      sino
+        si(PosCa=100)
+          finalizar:=V
+        sino
+          mover
+  fin
+  
+  proceso RecolectarYGuardar
+  variables
+    papeles:numero
+    cantidad:numero
+    intentos:numero
+    calle: numero
+    avenida: numero
+  comenzar
+    papeles:=0
+    cantidad:=0
+    intentos:=0
+    calle:=PosCa
+    avenida:=PosAv
+    mientras(intentos<8)
+      Random(cantidad,2,5)
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      mientras (HayPapelEnLaEsquina)&(papeles<cantidad)
+        tomarPapel
+        papeles:=papeles+1
+      si(papeles<>cantidad)
+        repetir papeles
+          depositarPapel
+        Pos(avenida, calle)
+        LiberarEsquina(50,50)
+        intentos:=intentos+1
+      sino
+        si (papeles=cantidad)
+          intentos:=0
+          Pos(avenida, calle)
+          LiberarEsquina(50,50)
+          repetir papeles
+            depositarPapel
+      papeles:=0
+  fin      
+areas
+  area1: AreaP (5,1,5,100)
+  area2: AreaP (10,1,10,100)
+  deposito: AreaPC(50,50,50,50)
+  area3: AreaP(11,1,11,1)
+  area4: AreaP(12,1,12,1)
+robots
+  robot productor
+  comenzar
+    AvanzarDepositar
+  fin
+  robot consumidor
+  comenzar
+    RecolectarYGuardar
+  fin
+variables
+  r1,r2: productor
+  r3,r4: consumidor
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r2, area2)
+  AsignarArea(r3, area3)
+  AsignarArea(r4, area4)
+  AsignarArea(r1, deposito)
+  AsignarArea(r2, deposito)  
+  AsignarArea(r3, deposito)
+  AsignarArea(r4, deposito)
+  Iniciar(r1, 5,1)
+  Iniciar(r2, 10,1)
+  Iniciar(r3, 11,1)
+  Iniciar(r4, 12,1)
+fin

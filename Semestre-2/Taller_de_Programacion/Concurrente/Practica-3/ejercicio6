@@ -1,0 +1,103 @@
+programa ejemplo
+procesos
+  proceso AsignarIds
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3,r3)
+  fin
+  
+  proceso JuntarPapeles (ES papeles:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  
+  proceso JuntarFlores (ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso Depositar
+  comenzar
+    mientras (HayPapelEnLaBolsa | HayFlorEnLaBolsa)&(PosCa<100)
+      si HayFlorEnLaBolsa
+        depositarFlor
+      si HayPapelEnLaBolsa
+        depositarPapel
+      mover
+  fin
+  proceso Cuadrado (E lado: numero; ES flores:numero; ES papeles: numero)
+  comenzar
+    repetir 4
+      repetir lado
+        JuntarFlores(flores)
+        JuntarPapeles(papeles)
+        mover
+      derecha
+  fin
+areas
+  areaReco: AreaPC (2,2,16,16)
+  areaDeposito: AreaPC(1,20,100,22)
+  areaF: AreaP (1,1,1,1)
+robots
+  robot colector
+  variables
+    id:numero
+    lado:numero
+    flores, papeles:numero
+    ca:numero
+  comenzar
+    lado:=6
+    RecibirMensaje(id, rf)
+    si (id=1)
+      Cuadrado(6, flores, papeles)
+    si (id=2)
+      Cuadrado(8, flores, papeles)
+    si (id=3)
+      Cuadrado(7, flores, papeles)
+    EnviarMensaje(id, rf)
+    RecibirMensaje(ca, rf)
+    Pos(1, ca)
+    derecha
+    Depositar
+  fin
+  robot robot2
+  variables
+    id:numero
+    ca:numero
+  comenzar
+    AsignarIds
+    ca:=20
+    repetir 3
+      RecibirMensaje(id,*)
+      si(id=1)
+        EnviarMensaje(ca,r1)
+      sino
+        si(id=2)
+          EnviarMensaje(ca,r2)
+        sino
+          EnviarMensaje(ca, r3)
+      ca:=ca+1
+      
+  fin
+variables
+  r1: colector
+  r2: colector
+  r3: colector
+  rf: robot2
+comenzar
+  AsignarArea(r1, areaReco)
+  AsignarArea(r2, areaReco)
+  AsignarArea(r3, areaReco)
+  AsignarArea(r1, areaDeposito)
+  AsignarArea(r2, areaDeposito)
+  AsignarArea(r3, areaDeposito)
+  AsignarArea(rf, areaF)
+  Iniciar(r1, 2,2)
+  Iniciar(r2, 5,5)
+  Iniciar(r3, 9,9)
+  Iniciar(rf, 1,1)
+fin

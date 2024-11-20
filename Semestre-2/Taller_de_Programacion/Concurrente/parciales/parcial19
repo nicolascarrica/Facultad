@@ -1,0 +1,136 @@
+programa parcial19
+procesos
+  proceso JuntarFlores(ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso EtapaR1(ES flores: numero)
+  comenzar
+    repetir 2
+      repetir 10
+        JuntarFlores(flores)
+        mover
+      JuntarFlores(flores)
+      derecha
+  fin
+  
+  proceso EtapaR2(ES flores:numero)
+  comenzar
+    repetir 2
+      repetir 9
+        JuntarFlores(flores)
+        mover
+      JuntarFlores(flores)
+      derecha
+  fin
+areas
+  areaA1a: AreaP (1,1,1,11)
+  areaA1b: AreaP(2,11,11,11)
+  areaA2a: AreaP(11,1,11,10)
+  areaA2b: AreaP(2,1,10,1)
+  areaB1a: AreaP(20,1,20,11)
+  areaB1b: AreaP(21,11,30,11)
+  areaB2a: AreaP(30,1,30,10)
+  areaB2b: AreaP(21,1,29,1)
+  areaF: AreaP(50,50,50,50)
+robots
+  robot robot1
+  variables
+    id:numero
+    flores:numero
+    ok:boolean
+  comenzar
+    flores:=0
+    RecibirMensaje(id, rf)
+    EtapaR1(flores)
+    si(id=1)
+      EnviarMensaje(V, a2)
+      RecibirMensaje(ok, a2)
+      EnviarMensaje(id, rf)
+      EnviarMensaje(flores, rf)
+    sino
+      EnviarMensaje(V, b2)
+      RecibirMensaje(ok, b2)
+      EnviarMensaje(id, rf)
+      EnviarMensaje(flores, rf)
+  fin
+  robot robot2
+  variables
+    id:numero
+    flores:numero
+    ok: boolean
+  comenzar
+    flores:=0
+    RecibirMensaje(id, rf)
+    repetir 2
+      derecha
+    si(id=2)
+      RecibirMensaje(ok, a1)
+      EtapaR2(flores)
+      EnviarMensaje(V, a1)
+      EnviarMensaje(id, rf)
+      EnviarMensaje(flores, rf)
+    sino 
+      RecibirMensaje(ok, b1)
+      EtapaR2(flores)
+      EnviarMensaje(V, b1)
+      EnviarMensaje(id, rf)
+      EnviarMensaje(flores, rf)
+  fin
+  robot fiscal
+  variables
+    floresA, floresB, flores:numero
+    id:numero
+  comenzar
+    floresA:=0
+    floresB:=0
+    EnviarMensaje(1,a1)
+    EnviarMensaje(2,a2)
+    EnviarMensaje(3, b1)
+    EnviarMensaje(4, b2)
+    repetir 4
+      RecibirMensaje(id, *)
+      si(id=1)
+        RecibirMensaje(flores, a1)
+        floresA:=floresA + flores
+      sino 
+        si(id=2)
+          RecibirMensaje(flores, a2)
+          floresA:=floresA + flores
+        sino
+          si(id=3)
+            RecibirMensaje(flores, b1)
+            floresB:=floresB+flores
+          sino
+            RecibirMensaje(flores, b2)
+            floresB:=floresB + flores
+    si(floresA>floresB)
+      Informar('ganador A', floresA)
+    sino
+      si(floresB>floresA)
+        Informar('ganador B', floresB)
+      sino
+        Informar('Empate', floresB) 
+  fin
+variables
+  a1,b1: robot1
+  a2,b2: robot2
+  rf: fiscal
+comenzar
+  AsignarArea(a1, areaA1a)
+  AsignarArea(a1, areaA1b)
+  AsignarArea(a2, areaA2a)
+  AsignarArea(a2, areaA2b)
+  AsignarArea(b1, areaB1a)
+  AsignarArea(b1, areaB1b)
+  AsignarArea(b2, areaB2a)
+  AsignarArea(b2, areaB2b)
+  AsignarArea(rf, areaF)
+  Iniciar(a1, 1,1)
+  Iniciar(a2, 11,10)
+  Iniciar(b1, 20,1)
+  Iniciar(b2, 30,10)
+  Iniciar(rf,50,50)
+fin

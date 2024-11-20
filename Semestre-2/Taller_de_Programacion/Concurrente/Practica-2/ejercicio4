@@ -1,0 +1,153 @@
+programa ejercicio4
+procesos
+  proceso LimpiarEsquina(ES cantidad:numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      cantidad:=cantidad+1
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cantidad:=cantidad+1
+  fin
+  
+  proceso Acceder(ES cantidad:numero)
+  variables
+    avIni, caIni, av, ca: numero
+  comenzar
+    avIni:=PosAv
+    caIni:= PosCa
+    Random(av, 25,75)
+    Random(ca, 25,75)
+    Pos(av, ca)
+    LimpiarEsquina(cantidad)
+    Pos(avIni, caIni)
+  fin
+  proceso AvisarGanador(E id:numero; E gano:boolean)
+  comenzar
+    si(id=1)
+      EnviarMensaje(gano, r1)
+    sino
+      si(id=2)
+        EnviarMensaje(gano,r2)
+      sino
+        si(id=3)
+          EnviarMensaje(gano,r3)
+        sino
+          EnviarMensaje(gano,r4)
+  fin
+  proceso BloquearAccesos
+  comenzar
+    EnviarMensaje(F,r1)
+    EnviarMensaje(F,r2)
+    EnviarMensaje(F,r3)
+    EnviarMensaje(F,r4)
+  fin
+  proceso MaximaCantidad(E c1:numero; E c2:numero; E c3:numero; E c4:numero; ES maxCantidad:numero)
+  variables
+    maximo: numero
+  comenzar
+    maximo:=-1
+    si c1>maximo
+      maximo:=c1
+      maxCantidad:=1
+    si c2>maximo
+      maximo:=c2
+      maxCantidad:=2
+    si c3>maximo
+      maximo:=c3
+      maxCantidad:=3
+    si c3>maximo
+      maximo:=c4
+      maxCantidad:=4
+  fin
+
+areas
+  cuadrante: AreaPC (25,25,75,75)
+  areaJ: AreaP(1,1,1,1)
+  area1: AreaP(25,1,25,1)
+  area2: AreaP(30,1,30,1)
+  area3: AreaP(35,1,35,1)
+  area4: AreaP(40,1,40,1)
+  
+robots
+  robot robotJefe
+  variables
+    c1,c2,c3,c4:numero
+    maxId, id:numero
+    gano:boolean
+  comenzar
+    c1:=0
+    c2:=0
+    c3:=0
+    c4:=0
+    repetir 10
+      Random(id,1,4)
+      si (id=1)
+        EnviarMensaje(V, r1)
+        EnviarMensaje(c1, r1)
+        RecibirMensaje(c1,r1)
+      sino
+        si id=2
+          EnviarMensaje(V,r2)
+          EnviarMensaje(c2,r2)
+          RecibirMensaje(c2,r2)
+        sino
+          si id=3
+            EnviarMensaje(V,r3)
+            EnviarMensaje(c3,r3)
+            RecibirMensaje(c3,r3)
+          sino
+            si id=4
+              EnviarMensaje(V,r4)
+              EnviarMensaje(c4, r4)
+              RecibirMensaje(c4,r4)
+    BloquearAccesos
+    MaximaCantidad(c1,c2,c3,c4,maxId)
+    id:=1
+    repetir 4
+      si(id=maxId)
+        gano:=V
+      sino
+        gano:=F
+      AvisarGanador(id, gano)
+      id:=id+1
+    Informar('ganador', maxId)
+        
+  fin
+  robot robot1
+  variables
+    cant:numero
+    ok, gane: boolean
+  comenzar
+    RecibirMensaje(ok, jefe)
+    mientras(ok)
+      RecibirMensaje(cant, jefe)
+      Acceder(cant)
+      EnviarMensaje(cant, jefe)
+      RecibirMensaje(ok, jefe)
+    RecibirMensaje(gane, jefe)
+    si(gane)
+      Pos(50,50)
+  fin
+variables
+  jefe: robotJefe
+  r1: robot1
+  r2: robot1
+  r3: robot1
+  r4: robot1
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, cuadrante)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, cuadrante)
+  AsignarArea(r3, area3)
+  AsignarArea(r3, cuadrante)
+  AsignarArea(r4, area4)
+  AsignarArea(r4, cuadrante)
+  AsignarArea(jefe, areaJ)
+  Iniciar(r1, 25,1)
+  Iniciar(r2, 30,1)
+  Iniciar(r3, 35,1)
+  Iniciar(r4, 40,1)
+  Iniciar(jefe, 1,1)
+fin

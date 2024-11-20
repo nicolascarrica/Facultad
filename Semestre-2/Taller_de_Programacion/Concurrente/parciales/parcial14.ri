@@ -1,0 +1,130 @@
+programa ejemplo
+procesos
+  proceso JuntarFlores(ES flores:numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  
+  proceso Cuadrado(E lado: numero; ES flores:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        JuntarFlores(flores)
+        mover
+      derecha
+  fin
+  
+  proceso DepositarFlores(E flores:numero)
+  variables
+    miCa, miAv:numero
+  comenzar
+    miCa:=PosCa
+    miAv:=PosAv
+    repetir flores
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      depositarFlor
+      Pos(miAv, miCa)
+      LiberarEsquina(50,50)
+  fin
+  
+  proceso LevantarFlores(ES flores:numero)
+  comenzar
+    repetir flores
+      si HayFlorEnLaEsquina
+        tomarFlor
+  fin
+  
+  proceso maximo(E c1: numero; E c2: numero; E c3: numero; ES idMax: numero)
+  comenzar
+    si(c1 >= c2) & (c1 >= c3)
+      idMax:= 1
+    sino
+      si (c2 >= c1) & (c2>= c3)
+        idMax:= 2
+      sino
+        idMax:= 3
+  fin
+areas
+  area1: AreaP (1,1,7,22)
+  area2: AreaP (10,1,16,22)
+  area3: AreaP (20,1,26,22)
+  areaF: AreaP (100,100,100,100)
+  areaDep: AreaPC(50,50,50,50)
+robots
+  robot florero
+  variables
+    id:numero
+    lado, flores:numero
+    calle:numero
+  comenzar
+    RecibirMensaje(id, rf)
+    RecibirMensaje(lado, rf)
+    repetir 3
+      flores:=0
+      Cuadrado(lado, flores)
+      DepositarFlores(flores)
+      calle:=PosCa + lado + 1
+      Pos(PosAv, calle)
+      EnviarMensaje(id, rf)     
+  fin
+  robot fiscal
+  variables
+    lado:numero
+    id:numero
+    cant1, cant2, cant3:numero
+    flores:numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    id:=0
+    repetir 3
+      id:=id+1
+      Random(lado, 1,6)
+      si(id=1)
+        EnviarMensaje(lado, r1)
+      sino
+        si(id=2)
+          EnviarMensaje(lado, r2)
+        sino
+          EnviarMensaje(lado,r3)
+    cant1:=0
+    cant2:=0
+    cant3:=0
+    repetir 9
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(flores, r1)
+        LevantarFlores(flores)
+        cant1:=cant1+flores
+      sino
+        si(id=2)
+          RecibirMensaje(flores, r2)
+          LevantarFlores(flores)
+          cant2:=cant2+flores
+        sino
+          RecibirMensaje(flores, r3)
+          LevantarFlores(flores)
+          cant3:=cant3+flores
+    maximo(cant1, cant2, cant3, idMax)
+  fin
+variables
+  r1,r2,r3: florero
+  rf: fiscal
+comenzar
+  AsignarArea(r1, area1)
+  AsignarArea(r1, areaDep)
+  AsignarArea(r2, area2)
+  AsignarArea(r2, areaDep)
+  AsignarArea(r3, area3)
+  AsignarArea(r3, areaDep)
+  AsignarArea(rf, areaF)
+  AsignarArea(rf, areaDep)
+  Iniciar(r1, 1,1)
+  Iniciar(r2, 10,1)
+  Iniciar(r3, 20,1)
+  Iniciar(rf, 100,100)
+fin
