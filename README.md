@@ -19,6 +19,11 @@ En este repositorio, encontrarás una colección de recursos que me han ayudado 
 - [**Conceptos de Algoritmos, Datos y Programas (CADP)**](./Semestre-1/CADP/)
 - [**Organización de Computadoras**](./Semestre-1/Organizacion%20de%20Computadoras/)
 
+### Segundo Semestre 📅
+
+- [**Taller de Programacion**](./Semestre-2/Taller_de_Programacion/)
+- [**Arquitectura de Computadoras**](./Semestre-2/Arquitectura_de_Computadoras/)
+
 ## Notas Adicionales 📝
 
 - **Calidad y Exactitud**: Los materiales proporcionados son recursos personales y pueden no estar completamente actualizados o corregidos. Utilízalos como apoyo adicional en tu estudio.
