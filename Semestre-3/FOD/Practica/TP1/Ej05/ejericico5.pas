@@ -153,4 +153,4 @@ begin
 	menuPrincipal(arch, data);
 end.
 
-// black point 18 ,brillo 15,contraste 29  exposure -43
+

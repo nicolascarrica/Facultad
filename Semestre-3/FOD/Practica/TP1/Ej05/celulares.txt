@@ -1,9 +1,9 @@
-1 150.50    Samsung
-10 5    Smartphone pantalla grande
+1 150.50     Samsung
+10 5     Smartphone pantalla grande
 Galaxy A32
-2 200.75    Apple
-15 8    Smartphone pantalla grande
+2 200.75     Apple
+15 8     Smartphone pantalla grande
 iPhone 15
-3 200.75    Xiaomi
-15 25    Smartphone pantalla grande
+3 200.75     Xiaomi
+15 25     Smartphone pantalla grande
 Redmi 15
