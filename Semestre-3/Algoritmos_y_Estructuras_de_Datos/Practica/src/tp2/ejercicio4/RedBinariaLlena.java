@@ -6,18 +6,14 @@ que un nodo recibe un mensaje y lo reenvía a sus dos hijos.
 Su tarea es calcular el mayor retardo posible, en el camino que realiza un mensaje desde la raíz
 hasta llegar a las hojas en una red binaria llena. En el ejemplo, debería retornar 10+3+9+12=34
 (Si hay más de un máximo retorne el último valor hallado).
-Nota: asuma que cada nodo tiene el dato de retardo de reenvío expresado en cantidad de
-segundos.
+Nota: asuma que cada nodo tiene el dato de retardo de reenvío expresado en cantidad de segundos.
 a) Indique qué estrategia (recorrido en profundidad o por niveles) utilizará para resolver el
 problema.
-Dado que necesitamos evaluar el retardo acumulado en el camino desde la raíz hasta las hojas, utilizaremos un recorrido en profundidad (DFS - Depth First Search).
+Dado que necesitamos evaluar el retardo acumulado en el camino desde la raíz hasta las hojas, utilizaremos un recorrido en profundidad 
 
-📍 Razones para elegir DFS (Recursión o Pila explícita):
-
-Necesitamos explorar todos los caminos hasta las hojas.
-DFS nos permite llevar un contador acumulativo del retardo de cada camino.
+Necesitamos explorar todos los caminos hasta las hojas, nos permite llevar un contador acumulativo del retardo de cada camino.
 Nos aseguramos de encontrar el máximo retardo posible en cualquier ruta.
-⚠️ No usamos BFS (por niveles) porque este enfoque es más útil para encontrar caminos mínimos, pero aquí buscamos el máximo retardo.
+No usamos BFS (por niveles) porque este enfoque es más útil para encontrar caminos mínimos, pero aquí buscamos el máximo retardo.
 b) Cree una clase Java llamada RedBinariaLlena donde implementará lo solicitado en el
 método retardoReenvio():int */
 
