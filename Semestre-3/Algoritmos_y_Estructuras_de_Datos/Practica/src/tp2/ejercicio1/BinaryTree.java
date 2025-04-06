@@ -171,5 +171,29 @@ public class BinaryTree<T> {
 		        nivelActual++;
 		    }
 						
-		}		
+		}
+	public void imprimirArbol() {
+		System.out.print(this.getData() + " ");
+        if(this.hasLeftChild()) this.getLeftChild().imprimirArbol();
+        
+        if(this.hasRightChild()) this.getRightChild().imprimirArbol();
+    }
+	
+	public void imprimirArbolPorNiveles() {
+	    Queue<BinaryTree<T>> queue = new LinkedList<>();
+	    queue.add(this); // Agregar la raíz a la cola
+
+	    while (!queue.isEmpty()) {
+	        BinaryTree<T> current = queue.poll(); // Sacar el nodo actual de la cola
+	        System.out.print(current.getData() + " ");
+
+	        // Agregar hijos a la cola si existen
+	        if (current.hasLeftChild()) {
+	            queue.add(current.getLeftChild());
+	        }
+	        if (current.hasRightChild()) {
+	            queue.add(current.getRightChild());
+	        }
+	    }
+	}
 }
