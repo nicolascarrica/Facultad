@@ -197,3 +197,81 @@ dist
 /Semestre-2/Taller_de_Programacion/Objetos/Parciales/TurnoC161024/build/
 /Semestre-2/Taller_de_Programacion/Objetos/Parciales/TurnoM161024/nbproject/private/
 /Semestre-2/Taller_de_Programacion/Objetos/Parciales/TurnoM161024/build/
+/Semestre-3/Algoritmos_y_Estructuras_de_Datos/Practica/AYED/nbproject/private/
+/Semestre-3/Algoritmos_y_Estructuras_de_Datos/Practica/AYED/build/
+/Semestre-3/Algoritmos_y_Estructuras_de_Datos/Practica/JavaApplication46/nbproject/private/
+/Semestre-3/Algoritmos_y_Estructuras_de_Datos/Practica/JavaApplication46/build/
+
+# === Rust ===
+/target/
+/debug/
+/release/
+Cargo.lock
+**/*.rs.bk
+
+# === Java ===
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.log
+*.javadoc
+*.classpath
+*.project
+*.settings/
+bin/
+out/
+build/
+.gradle/
+.gradle-cache/
+*.tmp
+
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.ipr
+
+# Eclipse
+*.launch
+*.metadata
+*.recommenders
+*.bak
+*.swp
+
+# === Pascal ===
+*.o
+*.ppu
+*.a
+*.compiled
+*.~*
+*.bak
+*.exe
+*.dll
+*.map
+*.rst
+*.tds
+
+# Lazarus/Free Pascal
+lib/
+backup/
+*.lps
+*.lpi
+*.compiled
+*.compiled.*
+
+# === General / Editores ===
+*.swp
+*.swo
+*.DS_Store
+*.vscode/
+*.env
+*.log
+
+# === Sistema ===
+Thumbs.db
+ehthumbs.db
+Desktop.ini
