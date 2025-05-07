@@ -16,7 +16,7 @@ struct Persona {
 }
 
 impl Persona {
-  fn new(nombre: String, edad: u32, direccion: Option<String>) -> Persona{
+  fn new (nombre: String, edad: u32, direccion: Option<String>) -> Persona{
     Persona {
       nombre,
       edad,
@@ -31,6 +31,14 @@ impl Persona {
         None => result += ", Direccion: No especificada",
      }
       result
+  }
+
+  fn obtener_edad(&self) -> u32 {
+    return self.edad
+  }
+
+  fn actualizar_direccion(&mut self, nueva_direccion: String) {
+    self.direccion = Some(nueva_direccion);
   }
 }
 
@@ -63,15 +71,53 @@ mod persona_tests {
     assert_eq!(persona.edad, 35);
     assert_eq!(persona.direccion, None);
   }
-    #[test]
-    fn test_to_string_con_direccion() {
-        let persona = Persona::new(
-            "Ana López".to_string(),
-            40,
-            Some("Avenida Central 456".to_string()),
-        );
-        
-        let expected = "nombre: Ana López, Edad: 40, Direccion: Avenida Central 456";
-        assert_eq!(persona.to_string(), expected);
-    }
+  #[test]
+  fn test_to_string_con_direccion() {
+    let persona = Persona::new(
+      "Nico Carrica".to_string(),
+      34,
+      Some("Calle 119 43".to_string()),
+    );
+      
+    let expected = "nombre: Nico Carrica, Edad: 34, Direccion: Calle 119 43";
+    assert_eq!(persona.to_string(), expected);
+  }
+
+  #[test]
+  fn test_obtener_edad(){
+    let persona = Persona {
+      nombre: "Nicolas".to_string(),
+      edad: 34,
+      direccion: None,
+    };
+
+    let edad = persona.obtener_edad();
+    assert_eq!(edad,34)
+  }
+  #[test]
+  fn test_actualizar_direccion_none(){
+    let mut persona = Persona {
+      nombre: "Nicolas".to_string(),
+      edad: 34,
+      direccion: None,
+    };
+    persona.actualizar_direccion("Calle 119".to_string());
+
+    assert_eq!(persona.direccion, Some("Calle 119".to_string()));
+  }
+
+  #[test]
+  fn test_actualizar_direccion_existente(){
+    let mut persona = Persona {
+      nombre: "Nicolas".to_string(),
+      edad:34,
+      direccion: Some("Calle 41".to_string()),
+    };
+
+    persona.actualizar_direccion("Calle 119".to_string());
+    assert_eq!(persona.direccion, Some("Calle 119".to_string()));
+  }
+
+
+ 
 }
