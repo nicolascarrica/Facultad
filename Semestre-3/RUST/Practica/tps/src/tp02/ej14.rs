@@ -10,4 +10,5 @@ fn test_incrementar() {
     let numero = 5.0;
     let resultado = incrementar(numero);
     assert_eq!(resultado, 6.0);
+    assert_ne!(resultado, 5.0);
 }

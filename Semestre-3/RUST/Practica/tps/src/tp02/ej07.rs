@@ -18,4 +18,5 @@ fn test_cantidad_de_mayores() {
   let limite = 5;
   let cantidad = cantidad_de_mayores(&numeros, limite);
   assert_eq!(cantidad, 5);
+  assert_ne!(cantidad, 4);
 }

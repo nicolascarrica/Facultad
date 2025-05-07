@@ -21,4 +21,5 @@ fn test_cantidad_en_rango() {
   let superior = 8;
   let cantidad = cantidad_en_rango(&numeros, inferior, superior);
   assert_eq!(cantidad, 4);
+  assert_ne!(cantidad, 5);
 }

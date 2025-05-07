@@ -15,4 +15,5 @@ fn test_longitud_de_cadenas() {
   let cadenas = ["hola".to_string(), "mundo".to_string(), "como".to_string(), "estas".to_string()];
   let longitudes = longitud_de_cadenas(&cadenas);
   assert_eq!(longitudes, [4, 5, 4, 5]);
+  assert_ne!(longitudes, [4, 5, 4, 6]);
 }

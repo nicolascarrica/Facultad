@@ -20,4 +20,5 @@ fn test_cantidad_de_cadenas_mayor_a() {
   let limite = 4;
   let cantidad = cantidad_de_cadenas_mayor_a(&cadenas, limite);
   assert_eq!(cantidad, 2);
+  assert_ne!(cantidad, 3); // cambia el valor esperado para que falle el test
 }

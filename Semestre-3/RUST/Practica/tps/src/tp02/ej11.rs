@@ -14,4 +14,5 @@ fn test_multiplicar_valores() {
     let factor = 2;
     multiplicar_valores(&mut numeros, factor);
     assert_eq!(numeros, [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]);
+    assert_ne!(numeros, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 }
