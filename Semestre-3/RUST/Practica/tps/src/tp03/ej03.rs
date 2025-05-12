@@ -10,14 +10,15 @@
 // ➢  es_mayor(una_fecha): que retorna true si la fecha que recibe el mensaje es mayor a 
 // la fecha pasada por parámetro. 
 
-struct Fecha {
+#[derive(Debug, Clone, PartialEq)]
+pub struct Fecha {
     dia: u32,
     mes: u32,
     anio: u32,
 }
 
 impl Fecha {
-  fn new(dia: u32, mes: u32, anio: u32) -> Fecha {
+  pub fn new(dia: u32, mes: u32, anio: u32) -> Fecha {
     Fecha { dia, mes, anio }
   }
 
@@ -44,7 +45,7 @@ impl Fecha {
     dias_del_mes
   }
 
-  fn es_fecha_valida(&self) -> bool {
+  pub fn es_fecha_valida(&self) -> bool {
     let mut estado: bool = false;
     if self.mes > 0 && self.mes < 13 && self.anio > 0 {
       let dias_del_mes: u32 = self.cantidad_de_dias(self.mes);
@@ -53,7 +54,7 @@ impl Fecha {
     estado
   }
 
-  fn sumar_dias(&mut self, dias: u32){
+  pub fn sumar_dias(&mut self, dias: u32){
     let mut dias_del_mes = self.cantidad_de_dias(self.mes);
     self.dia += dias;
 
@@ -73,7 +74,7 @@ impl Fecha {
     } 
   }
 
-  fn restar_dias(&mut self, mut dias: u32){
+  pub fn restar_dias(&mut self, mut dias: u32){
     // Mientras haya días para restar
     while dias !=0 {
       // Si la cantidad de dias a restar es mayor o igual que el dia actual
@@ -97,7 +98,7 @@ impl Fecha {
     }
   }
 
-  fn es_mayor(&self, otra_fecha: &Fecha) -> bool {
+  pub fn es_mayor(&self, otra_fecha: &Fecha) -> bool {
     let mut mayor: bool = false;
     if self.anio > otra_fecha.anio {
         mayor = true;
