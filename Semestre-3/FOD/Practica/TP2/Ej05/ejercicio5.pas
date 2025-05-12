@@ -37,8 +37,8 @@ type
 	
 	maestro = file of producto;
 	detalle = file of infoDetalle;
-	vectorDetalle = array (subrango] of detalle;
-	vectorRegistros = array [subrango] of registro;
+	vectorDetalle = array [subrango] of detalle;
+	vectorRegistros = array [subrango] of infoDetalle;
 
 procedure leer(var det: detalle; var infoDet: infoDetalle);
 begin
@@ -62,12 +62,7 @@ begin
 end;
 
 
-procedure reporte (var mae:maestro):
-var
-	p:producto;
-	txt: text;
-begin
-	reset(mae)
+
 procedure actualizarMaestro(var mae: maestro; var vecDet: vectorDetalle);
 var
 	min:infoDetalle;
@@ -79,7 +74,7 @@ begin
 	reset(mae);
 	for i:=1 to DF do begin
 		reset(vecDet[i]);
-		leer(vecDet[i]; vecReg[i]);
+		leer(vecDet[i], vecReg[i]);
 	end;
 	minimo(vecDet, vecReg, min);
 	while(min.codigo <> val_alto) do begin
