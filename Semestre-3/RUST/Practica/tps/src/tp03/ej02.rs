@@ -47,6 +47,13 @@ mod test_rectangulo{
     assert_eq!(rect.calcular_area(),15.0);
   }
 
+  //test para un triangulo sin lados, debe dar error
+  #[test]
+  fn test_calcular_area_sin_lados(){
+    let rect = Rectangulo::new(0.0,0.0);
+    assert_eq!(rect.calcular_area(),0.0);
+  }
+
   #[test]
   fn test_calcular_perimetro(){
     let rect = Rectangulo::new(5.0, 3.0);
