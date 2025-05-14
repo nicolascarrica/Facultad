@@ -11,7 +11,7 @@
 // ➔  modificar título de la playlist. 
 // ➔  eliminar todas las canciones
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 enum Genero {
   Rock,
   Pop,
@@ -22,17 +22,15 @@ enum Genero {
 
 impl Genero {
   fn to_string(&self) -> String {
-    match self {
-      Genero::Rock => "Rock".to_string(),
-      Genero::Pop => "Pop".to_string(),
-      Genero::Rap => "Rap".to_string(),
-      Genero::Jazz => "Jazz".to_string(),
-      Genero::Otros => "Otros".to_string(),
-    }
+    format!("{:?}", self)
+  }
+
+  fn eq(&self, other: &Self) -> bool {
+    self.to_string().eq(&other.to_string())
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 struct Cancion {
   titulo: String,
   artista: String,
@@ -52,6 +50,14 @@ impl Cancion {
       artista,
       genero,
     }
+  }
+
+  fn to_string(&self) -> String {
+    format!("{:?}", self)
+  }
+
+  fn eq(&self, other: &Self) -> bool {
+    self.to_string().eq(&other.to_string())
   }
 }
 
@@ -118,7 +124,7 @@ impl Playlist {
     let mut canciones_filtradas = Vec::new();
     
     for cancion in &self.canciones {
-      if &cancion.genero == genero {
+      if cancion.genero.eq(genero) {
         canciones_filtradas.push(cancion);
       }
     }
@@ -197,7 +203,7 @@ use super::*;
 
     playlist.agregar_cancion(cancion.clone());
     assert_eq!(playlist.canciones.len(), 1);
-    assert_eq!(playlist.canciones[0], cancion);
+    assert!(playlist.canciones[0].eq(&cancion));
   }
 
   #[test]

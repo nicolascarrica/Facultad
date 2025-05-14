@@ -11,7 +11,7 @@
 // ➔  modificar título de la playlist. 
 // ➔  eliminar todas las canciones
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 enum Genero {
   Rock,
   Pop,
@@ -20,19 +20,27 @@ enum Genero {
   Otros,
 }
 
+// impl Genero {
+//   fn to_string(&self) -> String {
+//     match self {
+//       Genero::Rock => "Rock".to_string(),
+//       Genero::Pop => "Pop".to_string(),
+//       Genero::Rap => "Rap".to_string(),
+//       Genero::Jazz => "Jazz".to_string(),
+//       Genero::Otros => "Otros".to_string(),
+//     }
+//   }
+// }
 impl Genero {
   fn to_string(&self) -> String {
-    match self {
-      Genero::Rock => "Rock".to_string(),
-      Genero::Pop => "Pop".to_string(),
-      Genero::Rap => "Rap".to_string(),
-      Genero::Jazz => "Jazz".to_string(),
-      Genero::Otros => "Otros".to_string(),
-    }
+    format!("{:?}", self)
+  }
+  fn eq(&self, other: &Self) -> bool {
+    self.to_string().eq(&other.to_string())
   }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 struct Cancion {
   titulo: String,
   artista: String,
@@ -45,6 +53,8 @@ struct Playlist {
   nombre: String,
 }
 
+
+
 impl Cancion {
   fn new(titulo: String, artista: String, genero: Genero) -> Cancion {
     Cancion {
@@ -52,6 +62,14 @@ impl Cancion {
       artista,
       genero,
     }
+  }
+
+  fn to_string(&self) -> String {
+    format!("{:?}", self)
+  }
+
+  fn eq(&self, other: &Self) -> bool {
+    self.to_string().eq(&other.to_string())
   }
 }
 
@@ -106,7 +124,7 @@ impl Playlist {
 
   fn obtener_canciones_por_genero(&self, genero: &Genero) -> Vec<&Cancion> { //&Cancion para no tomar la propiedad
     self.canciones.iter()
-    .filter(|c| &c.genero == genero) // filter coleccion las canciones
+    .filter(|c| c.genero.eq(genero)) // filter coleccion las canciones
     .collect()// collect convierte el iterator en un vector
   }
 
@@ -175,7 +193,7 @@ use super::*;
 
     playlist.agregar_cancion(cancion.clone());
     assert_eq!(playlist.canciones.len(), 1);
-    assert_eq!(playlist.canciones[0], cancion);
+    assert!(playlist.canciones[0].eq(&cancion));
   }
 
   #[test]

@@ -21,7 +21,7 @@
 // ■  si la marca es BMW le aplica un recargo del 15%- 
 // ■  si el año es menor a 2000 le aplica un descuento del 5%.
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Debug, Clone)]
 struct Auto{
   marca: String,
   modelo: String,
@@ -30,7 +30,7 @@ struct Auto{
   color: Color,
 }
 
-#[derive(PartialEq, Debug, Clone)]
+#[derive(Debug, Clone)]
 enum Color {
   Rojo,
   Verde,
@@ -58,25 +58,33 @@ impl Auto {
     }
   }
 
+
   fn calcular_precio(&self) -> f32 {
-    let mut precio_final = self.precio;
-    // recargo por la marca.
+    let mut precio_adcional = match self.color {
+      Color::Rojo => self.precio *1.25,
+      Color::Amarillo => self.precio *1.25,
+      Color::Azul => self.precio *1.25,
+      _ => self.precio *0.9,
+        
+    };
+
     if self.marca == "BMW".to_string() {
-      precio_final+=self.precio*0.15;
-    }
-    // descuento por año
-    if self.anio < 2000{
-      precio_final-=self.precio*0.05;
+      precio_adcional+=self.precio*0.15;
     }
 
-    //recargo o descuento por color
-    if self.color == Color::Rojo || self.color == Color::Amarillo || self.color == Color::Azul {
-      precio_final+=self.precio*0.25;
-    } else {
-      precio_final-=self.precio*0.1; // revisar
+    if self.anio < 2000 {
+      precio_adcional-=self.precio*0.05;
     }
 
-    return precio_final;
+    return precio_adcional;
+  }
+
+  fn to_string(&self) -> String {
+    format!("{:?}", self)
+  }
+
+  fn eq(&self, other: &Self) -> bool {
+    self.to_string().eq(&other.to_string())
   }
 }
 
@@ -103,7 +111,7 @@ impl ConcesionarioAuto {
     // Usamos una referencia (&Auto) en lugar del valor completo para no copiar todo el Auto
     let mut posicion = 0;
     for i in 0..self.autos.len() {
-      if self.autos[i] == *auto {
+      if self.autos[i].eq(auto) {
         posicion = i;
         break;
       }
@@ -119,7 +127,7 @@ impl ConcesionarioAuto {
   fn buscar_auto(&self, auto: &Auto) -> Option<&Auto> {
     //self.autos.iter().find(|&a| a== auto)
     for i in 0..self.autos.len() {
-      if self.autos[i] == *auto {
+      if self.autos[i].eq(auto) {
         return Some(&self.autos[i]);
       }
     }
@@ -144,7 +152,7 @@ mod test{
     assert_eq!(auto.modelo, "Corolla");
     assert_eq!(auto.anio, 2023);
     assert_eq!(auto.precio, 10000.0);
-    assert_eq!(auto.color, Color::Rojo);
+    assert!(matches!(&auto.color, Color::Rojo));
   }
 
   #[test]
