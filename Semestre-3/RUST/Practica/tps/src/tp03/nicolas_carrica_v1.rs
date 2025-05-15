@@ -139,7 +139,6 @@ impl Estudiante{
 
     return Some(informe_est);
 
-    // In
 
   }
     
@@ -252,6 +251,16 @@ mod estudiante_tests{
     );
 
     let informe = estudiante.generar_informe();
+    assert_eq!(informe.is_some(), true);
+    assert_eq!(informe.nota_mas_alta, Some(8.0))
+    assert_eq!(informe.nota_mas_baja, Some(7.0))
+    aasert_eq!(informe.nombre_estudiante,Some("Nicolas"))
+    assert_eq!(informe.materia_mas_alta,Some("Programcion"))
+    assert_eq!(informe.materia_mas_baja,Some("Matematica"))
+    assert_eq!(informe.promedio_notas,Some(7.0))
+    assert_eq!(informe.examenes_rendidos,Some(3))
+
+  
     
   }
 
