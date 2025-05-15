@@ -233,21 +233,6 @@ impl Biblioteca {
     None
   }
 
-  // fn devolver_prestamo(&mut self, libro:&Libro, cliente:&Cliente) -> bool { // le tuve qye agregar el mut para que se pueda cambiar el estado del prestamo de la fn de abajo
-  //   if let Some(mut prestamo) = self.buscar_prestamo(libro, cliente) {
-  //     println!("Estado antes de devolver: {:?}", prestamo.estado); // Depuración
-  //     prestamo.estado = EstadoPrestamo::Devuelto;
-  //     let now = Local::now();
-  //     let hoy = Fecha::new(now.day(), now.month(), now.year() as u32); // fecha actual usando la libreria chrono
-  //     prestamo.fecha_devolucion = Some(hoy);
-  //     self.incrementar_cantidad_copias(&libro);
-  //     println!("Estado después de devolver: {:?}", prestamo.estado); // Depuración
-  //     return true;
-  //   } else {
-  //     return false
-  //   }
-  // }
-
   fn devolver_prestamo(&mut self, libro:&Libro, cliente:&Cliente) -> bool {
     for prestamo in &mut self.prestamos {
       if prestamo.libro.isbn == libro.isbn && prestamo.cliente.nombre == cliente.nombre {
