@@ -8,7 +8,7 @@
 // ➢  calcular_perimetro: calcula el perímetro y lo retorna.
 
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Clone)]
 enum Tipo {
   Equilatero,
   Isosceles,
@@ -26,6 +26,7 @@ impl Triangulo {
     Triangulo { lado1, lado2, lado3 }
   }
 
+  
   fn determinar_tipo(&self) -> Tipo {
     if self.lado1==self.lado2 && self.lado2==self.lado3{
       Tipo::Equilatero
@@ -67,13 +68,13 @@ mod test_triangulo {
   #[test]
   fn test_determinar_tipo(){
     let triangulo1 = Triangulo::new(5.0, 5.0, 5.0);
-    assert_eq!(triangulo1.determinar_tipo(), Tipo::Equilatero);
+     assert!(matches!(triangulo1.determinar_tipo(), Tipo::Equilatero));
 
     let triangulo2 = Triangulo::new(5.0, 5.0, 8.0);
-    assert_eq!(triangulo2.determinar_tipo(), Tipo::Isosceles);
+    assert!(matches!(triangulo2.determinar_tipo(), Tipo::Isosceles));
 
     let triangulo3 = Triangulo::new(5.0, 3.0, 8.0);
-    assert_eq!(triangulo3.determinar_tipo(), Tipo::Escaleno);
+    assert!(matches!(triangulo3.determinar_tipo(), Tipo::Escaleno));
 
   }
 

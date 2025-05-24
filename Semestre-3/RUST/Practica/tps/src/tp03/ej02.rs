@@ -6,7 +6,7 @@
 // ➢  calcular_area: calcular el área y la retorna. 
 // ➢  calcular_perimetro: calcula el perímetro y lo retorna. 
 // ➢  es_cuadrado: retorna true si es cuadrado, false caso contrario
-#[derive(PartialEq, Debug)]
+#[derive(Clone, Debug)]
 struct Rectangulo {
   longitud: f32,
   ancho: f32,

@@ -38,14 +38,14 @@
 use super::ej03::Fecha;
 use chrono::prelude::*;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 struct Cliente {
   nombre: String,
   telefono: u32,
   correo_electronico: String,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 enum Genero {
   Novela,
   Infantil,
@@ -53,7 +53,7 @@ enum Genero {
   Otros(String),
 }
     
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 struct Libro {
   isbn: u32,
   titulo: String,
@@ -62,17 +62,28 @@ struct Libro {
   genero: Genero,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 enum EstadoPrestamo {
   EnPrestamo,
   Devuelto,
 }
-#[derive(Debug, Clone, PartialEq)]
+
+impl EstadoPrestamo{ // clase 3 pag 23
+  fn to_string(&self) -> String {
+    format!("{:?}", self)
+  }
+
+  fn es_igual(&self, other: &Self) -> bool {
+    self.to_string().eq(&other.to_string())
+  }
+}
+
+#[derive(Debug, Clone)]
 struct CopiaDisponible {
     libro: Libro,
     cantidad: u32,
 }
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 struct Prestamo {
   libro: Libro,
   cliente: Cliente,
@@ -81,7 +92,18 @@ struct Prestamo {
   estado: EstadoPrestamo,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+impl Prestamo {
+  fn to_string(&self) -> String {
+    format!("{:?}", self)
+  }
+
+  fn es_igual(&self, other: &Self) -> bool {
+    self.to_string().eq(&other.to_string())
+  }
+}
+
+
+#[derive(Debug, Clone)]
 struct Biblioteca {
   nombre: String,
   direccion: String,
@@ -151,7 +173,7 @@ impl Biblioteca {
     }
     let mut cantidad: u32 = 0;
     for prestamo in &self.prestamos {
-      if (prestamo.cliente.nombre == cliente.nombre) && (prestamo.estado == EstadoPrestamo::EnPrestamo) {
+      if (prestamo.cliente.nombre == cliente.nombre) && (prestamo.estado.es_igual(&EstadoPrestamo::EnPrestamo)) {
         cantidad += 1;
       }
     }
@@ -183,7 +205,7 @@ impl Biblioteca {
     for prestamo in &self.prestamos {
       let mut fecha_vencimiento = prestamo.fecha_vencimiento.clone();
       fecha_vencimiento.sumar_dias(dias);
-      if prestamo.fecha_vencimiento.es_mayor(&hoy) && prestamo.estado == EstadoPrestamo::EnPrestamo {
+      if prestamo.fecha_vencimiento.es_mayor(&hoy) && prestamo.estado.es_igual(&EstadoPrestamo::EnPrestamo) {
         prestamos_a_vencer.push(prestamo.clone());
       }
     }
@@ -195,14 +217,14 @@ impl Biblioteca {
     let now = Local::now();
     let hoy = Fecha::new(now.day(), now.month(), now.year() as u32); // fecha actual usando la libreria chrono
     for prestamo in &self.prestamos {
-      if !(prestamo.fecha_vencimiento.es_mayor(&hoy)) && prestamo.estado == EstadoPrestamo::EnPrestamo {
+      if !(prestamo.fecha_vencimiento.es_mayor(&hoy)) && prestamo.estado.es_igual(&EstadoPrestamo::EnPrestamo) {
         prestamos_vencidos.push(prestamo.clone());
       }
     }
     return prestamos_vencidos;
   }
 
-  fn buscar_prestamo(&self, libro: &Libro, cliente: &Cliente) -> Option<Prestamo> { // le tuve qye agregar el mut para que se pueda cambiar el estado del prestamo de la fn de abajo
+  fn buscar_prestamo(&self, libro: &Libro, cliente: &Cliente) -> Option<Prestamo> { 
     for prestamo in & self.prestamos {
       if prestamo.libro.isbn == libro.isbn && prestamo.cliente.nombre == cliente.nombre {
         return Some(prestamo.clone());
@@ -210,21 +232,6 @@ impl Biblioteca {
     }
     None
   }
-
-  // fn devolver_prestamo(&mut self, libro:&Libro, cliente:&Cliente) -> bool {
-  //   if let Some(mut prestamo) = self.buscar_prestamo(libro, cliente) {
-  //     println!("Estado antes de devolver: {:?}", prestamo.estado); // Depuración
-  //     prestamo.estado = EstadoPrestamo::Devuelto;
-  //     let now = Local::now();
-  //     let hoy = Fecha::new(now.day(), now.month(), now.year() as u32); // fecha actual usando la libreria chrono
-  //     prestamo.fecha_devolucion = Some(hoy);
-  //     self.incrementar_cantidad_copias(&libro);
-  //     println!("Estado después de devolver: {:?}", prestamo.estado); // Depuración
-  //     return true;
-  //   } else {
-  //     return false
-  //   }
-  // }
 
   fn devolver_prestamo(&mut self, libro:&Libro, cliente:&Cliente) -> bool {
     for prestamo in &mut self.prestamos {
@@ -598,12 +605,12 @@ mod tests {
     biblioteca.prestamos.push(prestamo2.clone());
         
     // Caso normal: buscar préstamo existente
-    let resultado = biblioteca.buscar_prestamo(&biblioteca.copias_disponibles[0].libro.clone(), &cliente1);
+    let resultado = biblioteca.buscar_prestamo(&biblioteca.copias_disponibles[0].libro, &cliente1);
     assert!(resultado.is_some());
-    assert_eq!(resultado, Some(prestamo1));
+    assert!(resultado.unwrap().es_igual(&prestamo1));
         
     // Caso de error: buscar préstamo con libro existente pero cliente diferente
-    let resultado = biblioteca.buscar_prestamo(&biblioteca.copias_disponibles[0].libro.clone(), &cliente2);
+    let resultado = biblioteca.buscar_prestamo(&biblioteca.copias_disponibles[0].libro, &cliente2);
     assert!(resultado.is_none());
         
     // Caso de error: buscar préstamo con libro inexistente
@@ -618,6 +625,7 @@ mod tests {
     assert!(resultado.is_none());
   }
     
+
   #[test]
   fn test_devolver_prestamo() {
     let mut biblioteca = crear_bibioteca_prueba();
@@ -646,7 +654,7 @@ mod tests {
     
     // Verificar que el estado del préstamo cambió a Devuelto
     if let Some(prestamo_actualizado) = biblioteca.buscar_prestamo(&biblioteca.copias_disponibles[0].libro.clone(), &cliente) { 
-      assert_eq!(prestamo_actualizado.estado, EstadoPrestamo::Devuelto);
+      assert!(prestamo_actualizado.estado.es_igual(&EstadoPrestamo::Devuelto));
       assert!(prestamo_actualizado.fecha_devolucion.is_some());
     } else {
       panic!("No se encontró el préstamo después de devolverlo");

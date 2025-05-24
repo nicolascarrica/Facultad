@@ -109,7 +109,12 @@ impl Veterinaria {
   }
 
   fn encontrar_mascota(&self, nombre_mascota: &str, nombre_duenio: &str)-> Option<usize>{
-    self.cola.iter().position(|m| m.duenio.nombre.to_lowercase() == nombre_duenio.to_lowercase() && m.nombre.to_lowercase() == nombre_mascota.to_lowercase())
+    for i in 0..self.cola.len() {
+      if self.cola[i].duenio.nombre.to_lowercase() == nombre_duenio.to_lowercase() && self.cola[i].nombre.to_lowercase() == nombre_mascota.to_lowercase() {
+        return Some(i);
+      }
+    }
+    None
   }
 
   fn registrar_atencion(&mut self, atencion: Atencion){
@@ -117,7 +122,14 @@ impl Veterinaria {
   }
 
   fn buscar_atencion(&mut self, nombre_mascota: &str, nombre_duenio: &str, telefono_duenio: u32)-> Option<&mut Atencion>{
-    self.atenciones.iter_mut().find(|a| a.mascota.duenio.telefono == telefono_duenio && a.mascota.duenio.nombre.to_lowercase() == nombre_duenio.to_lowercase() && a.mascota.nombre.to_lowercase() == nombre_mascota.to_lowercase())
+    for i in 0..self.atenciones.len() {
+      if self.atenciones[i].mascota.duenio.telefono == telefono_duenio &&
+        self.atenciones[i].mascota.duenio.nombre.to_lowercase() == nombre_duenio.to_lowercase() &&
+        self.atenciones[i].mascota.nombre.to_lowercase() == nombre_mascota.to_lowercase() {
+          return Some(&mut self.atenciones[i]);
+      }
+    }
+    None
   }
 
   fn modificar_diagnostico(&mut self, nombre_mascota: &str, nombre_duenio: &str, telefono_duenio: u32, diagnostico: &str){
@@ -139,21 +151,22 @@ impl Veterinaria {
   }
 
   fn eliminar_atencion(&mut self, nombre_mascota: &str, nombre_duenio: &str, telefono_duenio: u32) -> bool {
-    if let Some(pos) = self.atenciones.iter().position(|a|  //podria haber hecho esto con una funcion auxiliar que busque la pos de la atencion como lo hice con la mascota.
-        a.mascota.duenio.telefono == telefono_duenio &&
-        a.mascota.duenio.nombre.to_lowercase() == nombre_duenio.to_lowercase() &&
-        a.mascota.nombre.to_lowercase() == nombre_mascota.to_lowercase()
-    ) {
-        self.atenciones.remove(pos);
-        true
-    } else {
-        false
-    }
+    for i in 0..self.atenciones.len() {
+      if self.atenciones[i].mascota.duenio.telefono == telefono_duenio &&
+        self.atenciones[i].mascota.duenio.nombre.to_lowercase() == nombre_duenio.to_lowercase() && 
+        self.atenciones[i].mascota.nombre.to_lowercase() == nombre_mascota.to_lowercase(){
+        self.atenciones.remove(i);
+          return true
+      }
+    } 
+    false
   }
 }
 
 #[cfg(test)]
 mod tests {
+
+
 use super::*;
   use crate::tp03::ej03::Fecha;
 
@@ -288,7 +301,6 @@ use super::*;
 
     vet.modificar_fecha_proxima_visita("Sombra", "Carlos", 4585, Some(Fecha::new(15,01,2024)));
     assert!(vet.atenciones[0].proxima_visita.is_some());
-  
 
     // Suponiendo que no se pasa fecha  
     vet.modificar_fecha_proxima_visita("Sombra", "Carlos", 4585, None);
@@ -296,7 +308,9 @@ use super::*;
 
     //suponiendo fecha invalida
     vet.modificar_fecha_proxima_visita("Sombra", "Carlos", 4585, Some(Fecha::new(32,13,2024)));
-    assert!(vet.atenciones[0].proxima_visita.is_none()); // debería fallar
+    assert!(vet.atenciones[0].proxima_visita.is_none());
+    
+
   }
 
   #[test]

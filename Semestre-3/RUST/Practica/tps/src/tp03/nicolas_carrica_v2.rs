@@ -35,6 +35,7 @@ struct Estudiante{
 }
 
 struct Informe {
+  id_estudiante: u32,
   nombre_estudiante: String,
   examenes_rendidos: u32,
   promedio_notas: f32,
@@ -45,8 +46,9 @@ struct Informe {
 }
 
 impl Informe {
-  fn new(nombre_estudiante: String, examenes_rendidos: u32, promedio_notas: f32, nota_mas_alta: f32, materia_mas_alta: String, nota_mas_baja: f32, materia_mas_baja: String) -> Informe{
+  fn new(id_estudiante: u32, nombre_estudiante: String, examenes_rendidos: u32, promedio_notas: f32, nota_mas_alta: f32, materia_mas_alta: String, nota_mas_baja: f32, materia_mas_baja: String) -> Informe{
     Informe {
+      id_estudiante,
       nombre_estudiante,
       examenes_rendidos,
       promedio_notas,
@@ -111,36 +113,47 @@ impl Estudiante{
     if self.calificaciones.is_empty() {
       return None
     }
+
+    let promedio = match self.obtener_promedio() {
+      Some(valor) => valor,
+      None => return None
+    };
+
+    
     let mut nota_min: f32 = self.calificaciones[0].nota;
     let mut nota_max: f32 = self.calificaciones[0].nota;
-    
-    let mut informe_est = Informe::new("".to_string(), 0, 0.0, 0.0, "".to_string(), 0.0, "".to_string());
-    informe_est.nombre_estudiante = self.nombre_estudiante.clone();
-    informe_est.examenes_rendidos = self.calificaciones.len() as u32;
-    match {
-      self.obtener_promedio()
-    } {
-      Some(promedio) => informe_est.promedio_notas = promedio,
-      None => return None
-    }
 
-      for examen in &self.calificaciones{
+    let mut nombre_materia_max = self.calificaciones[0].nombre_de_materia.clone();
+    let mut nombre_materia_min = self.calificaciones[0].nombre_de_materia.clone();
+  
+
+    for examen in &self.calificaciones{
       if examen.nota > nota_max {
         nota_max = examen.nota;
-        informe_est.nota_mas_alta = examen.nota;
-        informe_est.materia_mas_alta = examen.nombre_de_materia.clone()
+        nombre_materia_max = examen.nombre_de_materia.clone();
       }
       if examen.nota < nota_min {
         nota_min = examen.nota;
-        informe_est.nota_mas_baja = examen.nota;
-        informe_est.materia_mas_baja = examen.nombre_de_materia.clone()
+        nombre_materia_min = examen.nombre_de_materia.clone();
       }
     }
 
+    let informe_est = Informe::new(
+      self.id,
+      self.nombre_estudiante.clone(),
+      self.calificaciones.len() as u32,
+      promedio,
+      nota_max,
+      nombre_materia_max,
+      nota_min,
+      nombre_materia_min
+    );
+    
+
     return Some(informe_est);
-
-    // In
-
+    // Agegue el id del estsudiante al informe, me lo habia comido en el examen.
+    // en lugar de iniciar el informe con datos vacios y luego asignarlos, inicie el informe con los datos correspondientes luego de obtenerlos.
+    // termine de agregar los test al final
   }
     
 
@@ -243,7 +256,8 @@ mod estudiante_tests{
     let calificaciones = vec! [
       Examen::new("Matematica".to_string(), 7.0),
       Examen::new("Programcion".to_string(), 8.0),
-      Examen::new("Ingles".to_string(), 7.0)
+      Examen::new("Ingles".to_string(), 7.0),
+      Examen::new("Seminario Rust".to_string(), 6.0)
     ];
     let estudiante = Estudiante::new(
       "Nicolas".to_string(),
@@ -251,10 +265,33 @@ mod estudiante_tests{
       calificaciones
     );
 
-    let informe = estudiante.generar_informe();
+    match estudiante.generar_informe(){
+      Some(informe) => {
+        assert_eq!(informe.nota_mas_alta, 8.0);
+        assert_eq!(informe.nota_mas_baja, 6.0);
+        assert_eq!(informe.nombre_estudiante, "Nicolas");
+        assert_eq!(informe.id_estudiante, 25458);
+        assert_eq!(informe.materia_mas_alta, "Programcion");
+        assert_eq!(informe.materia_mas_baja, "Seminario Rust");
+        assert_eq!(informe.promedio_notas, 7.0);
+        assert_eq!(informe.examenes_rendidos, 4);
+      }
+      None => panic!("Este informe debería ser None")
+    }
+     
+  }
 
-    assert!(informe.is_some());
-    
+  #[test]
+  fn test_generar_informe_vacio(){
+    let calificaciones = Vec::new();
+    let estudiante = Estudiante::new(
+      "Nicolas".to_string(),
+      25458, 
+      calificaciones
+    );
+
+    let informe_vacio = estudiante.generar_informe();
+    assert!(informe_vacio.is_none());
   }
 
 }

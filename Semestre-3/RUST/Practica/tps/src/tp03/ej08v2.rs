@@ -20,21 +20,11 @@ enum Genero {
   Otros,
 }
 
-// impl Genero {
-//   fn to_string(&self) -> String {
-//     match self {
-//       Genero::Rock => "Rock".to_string(),
-//       Genero::Pop => "Pop".to_string(),
-//       Genero::Rap => "Rap".to_string(),
-//       Genero::Jazz => "Jazz".to_string(),
-//       Genero::Otros => "Otros".to_string(),
-//     }
-//   }
-// }
 impl Genero {
   fn to_string(&self) -> String {
     format!("{:?}", self)
   }
+
   fn eq(&self, other: &Self) -> bool {
     self.to_string().eq(&other.to_string())
   }
@@ -52,8 +42,6 @@ struct Playlist {
   canciones: Vec<Cancion>,
   nombre: String,
 }
-
-
 
 impl Cancion {
   fn new(titulo: String, artista: String, genero: Genero) -> Cancion {
@@ -96,7 +84,12 @@ impl Playlist {
   }
 
   fn encontrar_pos_cancion(&self, titulo: &str) -> Option<usize> {
-    self.canciones.iter().position(|c| c.titulo.to_lowercase() == titulo.to_lowercase())
+    for i in 0..self.canciones.len() {
+      if self.canciones[i].titulo.to_lowercase() == titulo.to_lowercase() {
+        return Some(i);
+      }
+    }
+    None
   }
 
   fn mover_cancion(&mut self, titulo: &str, nueva_posicion: usize) -> bool {
@@ -119,19 +112,36 @@ impl Playlist {
   }
 
   fn buscar_cancion(&self, titulo: &str) -> Option<&Cancion> {
-    self.canciones.iter().find(|&c| c.titulo.to_lowercase() == titulo.to_lowercase())
+    for i in 0..self.canciones.len() {
+      if self.canciones[i].titulo.to_lowercase() == titulo.to_lowercase() {
+        return Some(&self.canciones[i]);
+      }
+    }
+    None
   }
 
   fn obtener_canciones_por_genero(&self, genero: &Genero) -> Vec<&Cancion> { //&Cancion para no tomar la propiedad
-    self.canciones.iter()
-    .filter(|c| c.genero.eq(genero)) // filter coleccion las canciones
-    .collect()// collect convierte el iterator en un vector
+    let mut canciones_filtradas = Vec::new();
+    
+    for cancion in &self.canciones {
+      if cancion.genero.eq(genero) {
+        canciones_filtradas.push(cancion);
+      }
+    }
+    
+    canciones_filtradas
   }
 
   fn obtener_canciones_por_artista(&self, artista: &str) -> Vec<&Cancion> {
-    self.canciones.iter()
-    .filter(|c| c.artista.to_lowercase() == artista.to_lowercase())
-    .collect()
+    let mut canciones_filtradas = Vec::new();
+    
+    for cancion in &self.canciones {
+      if cancion.artista.to_lowercase() == artista.to_lowercase() {
+        canciones_filtradas.push(cancion);
+      }
+    }
+    
+    canciones_filtradas
   }
 
   fn modificar_titulo(&mut self, nuevo_titulo: &str) {
@@ -146,7 +156,6 @@ impl Playlist {
 
 #[cfg(test)]
 mod tests {
-
 
 use super::*;
 

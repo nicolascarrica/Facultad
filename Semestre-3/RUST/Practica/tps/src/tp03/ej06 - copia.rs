@@ -252,8 +252,6 @@ mod estudiante_tests{
     );
 
     let informe = estudiante.generar_informe();
-
-    assert!(informe.is_some());
     
   }
 

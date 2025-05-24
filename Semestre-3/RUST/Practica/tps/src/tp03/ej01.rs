@@ -79,8 +79,8 @@ mod persona_tests {
       Some("Calle 119 43".to_string()),
     );
       
-    let expected = "nombre: Nico Carrica, Edad: 34, Direccion: Calle 119 43";
-    assert_eq!(persona.to_string(), expected);
+    let salida = "nombre: Nico Carrica, Edad: 34, Direccion: Calle 119 43";
+    assert_eq!(persona.to_string(), salida);
   }
 
   #[test]

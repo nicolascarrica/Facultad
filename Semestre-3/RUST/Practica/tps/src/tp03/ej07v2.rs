@@ -58,6 +58,7 @@ impl Auto {
     }
   }
 
+
   fn calcular_precio(&self) -> f32 {
     let mut precio_adcional = match self.color {
       Color::Rojo => self.precio *1.25,
@@ -92,10 +93,8 @@ impl ConcesionarioAuto {
     ConcesionarioAuto { 
       nombre, 
       direccion, 
+      autos: Vec::new(),
       capacidad_maxima,
-      //autos: Vec::new(),
-      autos:Vec::with_capacity(capacidad_maxima as usize),
-      
     }
   }
 
@@ -110,12 +109,15 @@ impl ConcesionarioAuto {
 
   fn eliminar_auto(&mut self, auto: &Auto) -> bool {
     // Usamos una referencia (&Auto) en lugar del valor completo para no copiar todo el Auto
-    let posicion = self.autos.iter().position(|a| a.eq(auto)); // |a| a == auto: Es una closure 
-
-    //position devuelve un option/ entonces debo verificar si hay un some 
-    //si posicion contiene un valor (Some), extrae ese valor y llámalo indice
-    if let Some(indice) = posicion {
-      self.autos.remove(indice);
+    let mut posicion = 0;
+    for i in 0..self.autos.len() {
+      if self.autos[i].eq(auto) {
+        posicion = i;
+        break;
+      }
+    }
+    if posicion < self.autos.len() {
+      self.autos.remove(posicion);
       true
     } else {
       false
@@ -123,7 +125,13 @@ impl ConcesionarioAuto {
   }
 
   fn buscar_auto(&self, auto: &Auto) -> Option<&Auto> {
-    self.autos.iter().find(|&a| a.eq(auto))
+    //self.autos.iter().find(|&a| a== auto)
+    for i in 0..self.autos.len() {
+      if self.autos[i].eq(auto) {
+        return Some(&self.autos[i]);
+      }
+    }
+    None
   }
 }
 

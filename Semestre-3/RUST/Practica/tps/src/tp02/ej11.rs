@@ -3,7 +3,7 @@
 // por el parámetro factor modificándolo.
 
 pub fn multiplicar_valores(arr: &mut [i32], factor: i32) {
-    for elemento in arr.iter_mut() {
+    for elemento in arr {
         *elemento *= factor; // * significa que estamos desreferenciando el puntero para acceder al valor;
     }
 }

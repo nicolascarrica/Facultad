@@ -2,7 +2,7 @@
 // reemplaza todos los números pares por -1.
 
 pub fn reemplazar_pares(arr: &mut [i32]) {
-    for elemento in arr.iter_mut() {
+    for elemento in arr {
         if *elemento % 2 == 0 {
             *elemento = -1;
         }
