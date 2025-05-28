@@ -1,0 +1,9 @@
+Ejercicio 3
+algunas operaciones de la clase arrayList se ejecutan en tiempo constante ya que no
+implican recorrer el arrego, si no solamente acceder a una posicion, por lo cual tienen orden
+de complejidad O(1).
+
+Otras operaciones como por ejemplo las que involucran la busqueda de un elemento en el arreglo
+tienen complejidad O(N), ya que son lineales.
+
+es por eso que la operacion get es O(1), ya que solo accede a una posicion del arreglo, y la operacion size es O(N), ya que recorre el arreglo.
