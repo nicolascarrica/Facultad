@@ -109,8 +109,8 @@ fn persona_mayor_y_menor_salario<'a>(personas: &'a Vec<Persona>) -> Option<[&'a 
         .partial_cmp(&per2.salario)
         .expect("Comparacion no posible")// si es none paniquea
         .then_with(|| {
-            per1.edad
-            .partial_cmp(&per2.edad)// desempata por edad;
+            per2.edad
+            .partial_cmp(&per1.edad)// desempata por edad;
             .expect("Comparacion de edad no fue posible")
         })        
     });
@@ -131,8 +131,6 @@ fn persona_mayor_y_menor_salario<'a>(personas: &'a Vec<Persona>) -> Option<[&'a 
     } else {
         None
     }
-
-
 }
 
 
@@ -185,6 +183,22 @@ mod tests {
     }
 
     #[test]
+    fn test_persona_mayor_y_menor_salario_con_empate() {
+        let personas = vec![
+            crear_persona("Nico", "Carri", "Calle 8", "La Plata", 4000.0, 30), // menor salario, edad mayor
+            crear_persona("Flori", "Ore", "Calle 3", "La Plata", 4000.0, 20), // menor salario, edad menor
+            crear_persona("Marce", "Pin", "Calle 119", "La Plata", 7000.0, 28), // mayor salario, edad menor
+            crear_persona("Sanchez", "Kunfu", "Calle 154", "La Plata", 7000.0, 35), // mayor salario, edad mayor
+        ];
+
+        let resultado = persona_mayor_y_menor_salario(&personas);
+
+        // Menor salario: Nico vs Flori -> Nico (edad mayor)
+        // Mayor salario: Marce vs Sanchez -> Sanchez (edad mayor)
+        assert_eq!(resultado, Some([&personas[0], &personas[3]]));
+    }
+
+    #[test]
     fn tes_personas_mayor_edad(){
         let mut personas = vec![
             crear_persona("Juan", "Perez", "Calle 123", "Ciudad A", 5000.0, 25),
@@ -201,6 +215,8 @@ mod tests {
         personas.clear();
         assert_eq!(personas_mayor_edad_ciudad(&personas, 0, "Ciudad A").len(),0);
     }
+
+    
 
     #[test]
     fn test_personas_en_ciudad(){
