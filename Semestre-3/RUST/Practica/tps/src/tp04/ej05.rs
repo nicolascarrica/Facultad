@@ -146,6 +146,7 @@ enum Transaccion {
   VentaCripto { fecha: Fecha, usuario: Usuario, cripto: Prefijo, cotizacion: f64, monto: f64 },
   RetiroCripto { fecha: Fecha, usuario: Usuario, blockchain: String, hash: String, cripto: Prefijo, cotizacion: f64, monto: f64 }, 
   RecepcionCripto { fecha: Fecha, usuario: Usuario, blockchain: String, cripto: Prefijo, cotizacion: f64, monto: f64 }, 
+  RetiroFiat { fecha: Fecha, usuario: Usuario, monto: f64, medio: Medio }
 }
 
 struct Xyz {
@@ -334,27 +335,51 @@ impl Xyz {
     }
   }
 
-  fn ingresar_dinero(&mut self, dni:String, monto: f64){
-    let user = self.usuarios.iter_mut().find(|u| u.dni == dni);
+  // fn ingresar_dinero(&mut self, dni:String, monto: f64) -> bool {
+  //   let user = self.usuarios.iter_mut().find(|u| u.dni == dni);
 
-    if let Some(u) = user {
-      if !u.esta_validado() {
-        return false; // No está validado no puede ingresar dinero
-      }
+  //   if let Some(u) = user {
+  //     if !u.esta_validado() {
+  //       return false; // No está validado no puede ingresar dinero
+  //     }
 
-      if u.actualizar_balance_fiat(monto) {
-        self.registrar_transaccion(Transaccion::IngresoDinero { 
-          fecha: get_fecha_actual(), 
-          usuario: u.clone(), 
-          monto 
-        });
-        true
-      } else {
-        false
-      }
-    } else {
-      false // No está el usuario si no devuelve some
+  //     if u.actualizar_balance_fiat(monto) {
+  //       self.registrar_transaccion(Transaccion::IngresoDinero { 
+  //         fecha: get_fecha_actual(), 
+  //         usuario: u.clone(), 
+  //         monto 
+  //       });
+  //       true
+  //     } else {
+  //       false
+  //     }
+  //   } else {
+  //     false // No está el usuario si no devuelve some
+  //   }
+  // }
+
+  fn ingresar_dinero(&mut self, dni: String, monto: f64) -> bool {
+    for u in &mut self.usuarios {
+        if u.dni == dni {
+            if !u.esta_validado() {
+                return false; // No está validado no puede ingresar dinero
+            }
+
+            let balance_actualizado = u.actualizar_balance_fiat(monto);
+            if balance_actualizado {
+                let transaccion = Transaccion::IngresoDinero { 
+                    fecha: get_fecha_actual(), 
+                    usuario: u.clone(), 
+                    monto 
+                };
+                self.registrar_transaccion(transaccion);
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
+    false
   }
 
   pub fn comprar_cripto(&mut self, dni: String, cripto: Prefijo, monto_cripto: f64) -> bool {
@@ -457,31 +482,56 @@ impl Xyz {
     }
   }
 
+  // pub fn recepcion_blockchain(&mut self, dni: String, cripto: Prefijo, blockchain: String, monto_cripto: f64) -> bool {
+  //   let user = self.usuarios.iter_mut().find(|u| u.dni == dni);
+  //   if let Some(u) = user {
+  //     if !u.esta_validado() {
+  //       return false;
+  //     }
+      
+  //     if u.actualizar_balance_cripto(cripto.clone(), monto_cripto) {
+  //       self.registrar_transaccion(Transaccion::RecepcionCripto { 
+  //         fecha: get_fecha_actual(), 
+  //         usuario: u.clone(), 
+  //         blockchain: blockchain, 
+  //         cripto: cripto.clone(), 
+  //         cotizacion: cripto.obtener_cotizacion(), 
+  //         monto: monto_cripto 
+  //       });
+  //       true
+  //     } else {
+  //       false
+  //     }
+  //   } else {
+  //       false 
+  //   }
+  // }
+
   pub fn recepcion_blockchain(&mut self, dni: String, cripto: Prefijo, blockchain: String, monto_cripto: f64) -> bool {
     let user = self.usuarios.iter_mut().find(|u| u.dni == dni);
     if let Some(u) = user {
-      if !u.esta_validado() {
-        return false;
-      }
-      
-      if u.actualizar_balance_cripto(cripto.clone(), monto_cripto) {
-        self.registrar_transaccion(Transaccion::RecepcionCripto { 
-          fecha: get_fecha_actual(), 
-          usuario: u.clone(), 
-          blockchain: blockchain, 
-          cripto: cripto.clone(), 
-          cotizacion: cripto.obtener_cotizacion(), 
-          monto: monto_cripto 
-        });
-        true
-      } else {
-        false
-      }
+        if !u.esta_validado() {
+            return false;
+        }
+        
+        if u.actualizar_balance_cripto(cripto.clone(), monto_cripto) {
+            let transaccion = Transaccion::RecepcionCripto { 
+                fecha: get_fecha_actual(), 
+                usuario: u.clone(), 
+                blockchain: blockchain, 
+                cripto: cripto.clone(), 
+                cotizacion: cripto.obtener_cotizacion(), 
+                monto: monto_cripto 
+            };
+            self.registrar_transaccion(transaccion);
+            true
+        } else {
+            false
+        }
     } else {
-        false 
+        false
     }
   }
-  
 
   pub fn retirar_fiat(&mut self, dni: String, medio: Medio, monto_fiat: f64) -> bool {
     let user = self.usuarios.iter_mut().find(|u| u.dni == dni);
