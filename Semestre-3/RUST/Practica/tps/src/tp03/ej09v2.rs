@@ -1,4 +1,4 @@
-use std::collections::VecDeque;
+
 
 // 9.-Dada una cadena de veterinarias se desea implementar un sistema de atención de 
 // pacientes para cada veterinaria, de la veterinaria se conoce el nombre, la dirección y un id. 
@@ -24,7 +24,7 @@ use std::collections::VecDeque;
  
 // Nota: para la fecha utilice lo implementado en el punto 3
 use crate::tp03::ej03::Fecha;
-
+use std::collections::VecDeque;
 
 #[derive(Debug, Clone)]
 enum TipoAnimal {

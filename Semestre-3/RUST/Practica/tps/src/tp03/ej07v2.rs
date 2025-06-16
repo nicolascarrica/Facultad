@@ -274,7 +274,10 @@ mod test{
         
     concesionario.agregar_auto(auto);
     let _auto_inexistente = &concesionario.autos[5]; // Índice fuera de rango
-    }
+
+    assert!(false);
+    
+  }
 
     
 }
