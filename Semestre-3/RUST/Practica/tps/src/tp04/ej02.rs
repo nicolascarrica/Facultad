@@ -37,7 +37,7 @@
  
 // Nota: Implemente todos los métodos y traits que considere para resolver los ejercicios. 
 // Todos los ejercicios deben resolverse con iterator y closure. 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, Clone)]
 struct Persona<'a> {
     nombre: &'a str,
     apellido: &'a str,
@@ -45,6 +45,12 @@ struct Persona<'a> {
     ciudad: &'a str,
     salario: f64,
     edad: u8,
+}
+
+impl<'a> PartialEq for Persona<'a> {
+    fn eq(&self, other: &Self) -> bool {
+        self.nombre == other.nombre && self.apellido == other.apellido
+    }
 }
 
 impl<'a> Persona<'a> {
