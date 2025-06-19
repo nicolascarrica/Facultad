@@ -41,12 +41,18 @@ impl DescuentoProducto for Producto {
     }
 }
 
-#[derive(Debug, Hash, PartialEq, Eq, Clone)]
+#[derive(Debug, Hash, Eq, Clone)]
 struct Persona {
     nombre: String,
     apellido: String,
     direccion: String,
     dni: String,
+}
+
+impl PartialEq for Persona {
+    fn eq(&self, other: &Self) -> bool {
+        self.dni == other.dni
+    }
 }
 
 #[derive(Clone)]
@@ -69,12 +75,17 @@ impl DescuentoCliente for Cliente {
     }
 }
 
-#[derive(Debug, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Clone, Hash, Eq)]
 struct Vendedor {
     info: Persona,
     legajo: String,
     antiguedad: u8,
     salario: u32,
+}
+impl PartialEq for Vendedor {
+    fn eq(&self, other: &Self) -> bool {
+        self.legajo == other.legajo
+    }
 }
 
 #[derive(Clone)]
