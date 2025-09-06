@@ -6,3 +6,4 @@
 //pub mod ej05;
 //pub mod ej05v1;
 //pub mod ej05_v3;
+pub mod nicolas_carrica_e2_v2;

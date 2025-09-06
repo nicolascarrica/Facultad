@@ -1,0 +1,23 @@
+[
+  {
+    "libro": {
+      "isbn": 123,
+      "titulo": "El Principito",
+      "autor": "Antoine de Saint-Exupéry",
+      "num_paginas": 98,
+      "genero": "Infantil"
+    },
+    "cliente": {
+      "nombre": "Juan",
+      "telefono": 123456,
+      "correo_electronico": "juan@example.com"
+    },
+    "fecha_vencimiento": {
+      "dia": 1,
+      "mes": 1,
+      "anio": 2026
+    },
+    "fecha_devolucion": null,
+    "estado": "EnPrestamo"
+  }
+]

@@ -1,0 +1,39 @@
+[
+  {
+    "IngresoDinero": {
+      "fecha": {
+        "dia": 19,
+        "mes": 6,
+        "anio": 2025
+      },
+      "dni": "123123123",
+      "monto": 9000000.0
+    }
+  },
+  {
+    "CompraCripto": {
+      "fecha": {
+        "dia": 19,
+        "mes": 6,
+        "anio": 2025
+      },
+      "dni": "123123123",
+      "cripto": "BTC",
+      "cotizacion": 107000.0,
+      "monto": 0.1
+    }
+  },
+  {
+    "VentaCripto": {
+      "fecha": {
+        "dia": 19,
+        "mes": 6,
+        "anio": 2025
+      },
+      "dni": "123123123",
+      "cripto": "BTC",
+      "cotizacion": 107000.0,
+      "monto": 0.05
+    }
+  }
+]

@@ -1,0 +1,11 @@
+[2025-06-16 15:21:24.936423 -03:00] Falló al guardar los préstamos
+[2025-06-16 15:24:43.884486900 -03:00] Falló al guardar las copias
+[2025-06-16 15:24:43.887060700 -03:00] Falló al guardar los préstamos
+[2025-06-16 15:26:[204265.-112861200 0-036:-00] Falló al cargar las copias
+16 15:26:46.113339700 -03:00] Falló al cargar los préstamos
+[2025-06-16 15:26:46.117457300 -0[230:2005-] 0Falló al guardar los préstamos6
+-16 15:26:46.118117200 -03:00] Falló al guardar las copias
+[2025-06-16 15:26:56.764240400 -03:00] Falló al cargar las copias
+[2025-06-16 15:26:56.770915 -03:00] Falló al cargar los préstamos
+[2025-06-16 15:26:56.790330 -03:00] Falló al guardar las copias
+[2025-06-16 15:26:56.794711300 -03:00] Falló al guardar los préstamos

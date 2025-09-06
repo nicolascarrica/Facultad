@@ -1,0 +1,13 @@
+[
+  {
+    "nombre": "Nico",
+    "apellido": "Carri",
+    "email": "nc@gmail.com",
+    "dni": "123123123",
+    "validado": true,
+    "fiat": 8994650.0,
+    "balances": {
+      "BTC": 0.05
+    }
+  }
+]
