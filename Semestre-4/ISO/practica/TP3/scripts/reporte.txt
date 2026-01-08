@@ -1,0 +1,10 @@
+Usuario: root | cantidad archivos 0
+Usuario: daemon | cantidad archivos 0
+Usuario: bin | cantidad archivos 0
+Usuario: sys | cantidad archivos 0
+Usuario: sync | cantidad archivos 0
+Usuario: games | cantidad archivos 0
+Usuario: man | cantidad archivos 0
+Usuario: mail | cantidad archivos 0
+Usuario: proxy | cantidad archivos 0
+Usuario: backup | cantidad archivos 0
