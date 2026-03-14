@@ -29,3 +29,20 @@ private double getMontoCobradoEntreFechas(LocalDate fechaInicio, LocalDate fecha
 ```
 
 ---
+
+## 1.2 Participación en proyectos 
+### Bad Smell: *Feature Envy* y Mala Asignación de Responsabilidad
+El método `participaEnProyecto(Persona p)` en la clase `Persona` debería estar en la clase `Proyecto`, ya que es esta última la responsable de evaluar la participación.
+
+### Solución: Aplicar *Move Method*
+Mover el método a la clase `Proyecto`
+
+### Bad Smell: Rompe el encapsulamiento
+En la clase `Persona`, la variable de instancia `id` es pública, lo que viola el encapsulamiento.
+
+### Solución: Aplicar *Encapsulate Field*
+```java
+private int id;
+```
+
+---
