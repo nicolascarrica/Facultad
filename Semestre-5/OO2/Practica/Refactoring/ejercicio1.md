@@ -3,12 +3,15 @@
 ## 1.1 Protocolo de Cliente
 
 ### Bad Smell: Los nombres de los metodos son poco explicativos
+
 Los siguientes métodos tienen nombres poco descriptivos (*code smell*):
+
 - `public double lmtCrdt()`
 - `protected double mtFcE(LocalDate f1, LocalDate f2)`  
 - `private double mtCbE(LocalDate f1, LocalDate f2)`
 
 ### Soluciomn: Aplicar *Rename Method*
+
 Se renombran los metodos mencionados para que sean mas descriptivos:
 ```java
 public double getLimiteCredito() { ... }
@@ -69,7 +72,7 @@ public void imprimirValores() {
 }
 ```
 
-### Bad Smell: Nombre del metodo poco explicativo.
+### Bad Smell: Nombre del metodo poco explicativo
 El nombre `imprimirValores()` no refleja claramente lo que hace.
 
 ### Solución: Aplicar *Rename Method*
